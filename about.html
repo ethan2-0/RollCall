@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<!--
+    RollCall: Peer-to-peer communications and encrypted messaging in HTML5
+    Copyright (C) 2015 Ethan White.
+
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation, version 2; no
+    other versions or revisions may be used under any circumstances.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program, likely available in license.txt; if not, write to the
+    Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+    Boston, MA  02110-1301, USA.
+-->
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>About RollCall</title>
+        <!-- JQuery -->
+        <script type="text/javascript" src="jquery-1.11.1.min.js"></script>
+        <!-- Bootstrap -->
+        <script type="text/javascript" src="btsp/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="btsp/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="btsp/css/bootstrap-theme.min.css"/>
+        <!-- JQuery UI -->
+        <script type="text/javascript" src="jquery-ui.js"></script>
+        <link rel="stylesheet" type="text/css" href="jquery-ui.css">
+        <!-- VelocityJS -->
+        <script type="text/javascript" src="velocity.js"></script>
+        <!-- Bootbox -->
+        <script type="text/javascript" src="bootbox.min.js"></script>
+        <!-- My stylesheet -->
+        <link rel="stylesheet" type="text/css" href="styles_other.css"/>
+        <link rel="stylesheet" type="text/css" href="about.css"/>
+        <!-- Firebase for login -->
+        <script type="text/javascript" src="firebase.js"></script>
+    </head>
+    <body>
+        <script type="text/javascript" src="login.js"></script>
+        <div class="section dark" id="section-1">
+            <div class="osl white center">
+                <div class="title-hero">RollCall</div>
+                <div class="title">Real privacy, free as in freedom, everywhere.</div>
+            </div>
+            <!-- TODO: Re-take screenshot; it's just generally terrible. -->
+            <center>
+                <img class="browser-chrome" src="images/screenshot.png" style="height: calc(80vh - 250px)"/>
+                <br/>
+                <span class="scrollto glyphicon glyphicon-arrow-down white" elm="#section-2"></span>
+            </center>
+        </div>
+        <!-- TODO: Encrypt RSA private keys with a passphrase -->
+        <!-- TODO: Show a dialog & change RSA private keys to use WebCrypto & 2048 bits -->
+        <div class="section" id="section-2">
+            <div class="container-fluid">
+                <div class="col-md-2">
+                    <!-- Padding to the left -->
+                </div>
+                <div class="col-md-4">
+                    <div class="osl title-hero margin-left-50">
+                        Real privacy
+                    </div>
+                    <div class="med">
+                        Unlike Skype, which claims to be private but <a href="https://defuse.ca/microsoft-reads-your-skype-messages.htm">really isn't</a>,
+                        neither your messages nor your conversations ever leave your browser unencrypted. We use 2048-bit primes for your RSA keypair
+                        and 256-bit keys for AES. It is more likely that you will be hit by an asteroid while reading this than that someone
+                        will ever be able to read your messages in the lifetime of the Earth.
+                    </div>
+                    <br/>
+                    To learn more, click <a href="privacy.html">here</a>.
+                    <br/>
+                    <br/>
+                    <span class="scrollto glyphicon glyphicon-arrow-down margin-left-50" elm="#section-3"></span>
+                </div>
+                <div class="col-md-4">
+                    <span class="glyphicon glyphicon-lock" style="font-size: 30vh; margin-top: 100px; margin-left: 10vw;"></span>
+                </div>
+            </div>
+        </div>
+        <div class="section dark white" id="section-3">
+            <div class="container-fluid">
+                <div class="col-md-2">
+                    <!-- Padding to the left -->
+                </div>
+                <div class="col-md-4">
+                    <div class="osl title-hero margin-left-50 white">
+                        Free as in freedom
+                    </div>
+                    <div class="med">
+                        Unlike Skype, which which is proprietary software, RollCall is free software, licensed under the GNU General Public License. That
+                        means you're free to use and modify it, as long as you give the same freedoms to everyone who uses your modified version. Additionally,
+                        you can see exactly how RollCall is made, unlike Skype, where nobody is really sure.
+                        For exact details, see <a href="license.html">license</a>.<br/><br/>
+                        Want a 100% free software stack? Use <a href="//www.mozilla.org/firefox">Firefox</a> and <a href="//www.debian.org">Debian Linux.</a>
+                    </div>
+                    <br/>
+                    To learn more, click <a href="license.html">here</a>.
+                    <br/>
+                    <br/>
+                    <span class="scrollto glyphicon glyphicon-arrow-down margin-left-50 white" elm="#section-4"></span>
+                </div>
+                <div class="col-md-4">
+                    <!-- Free software logo from https://upload.wikimedia.org/wikipedia/commons/3/31/Free_and_open-source_software_logo_%282009%29.svg (Found at: ) -->
+                    <center><img src="images/foss.svg" style="height: 30vh; margin-top: 10vh;"/></center>
+                </div>
+            </div>
+        </div>
+        <div class="section" id="section-4">
+            <div class="container-fluid">
+                <div class="col-md-2">
+                    <!-- Padding to the left -->
+                </div>
+                <div class="col-md-4">
+                    <div class="osl title-hero margin-left-50">
+                        Everywhere
+                    </div>
+                    <div class="med">
+                        No other VoIP product is fully online, written in HTML5. Wherever you are, so is RollCall; whether you're using Firefox, Opera, or Chrome.
+                    </div>
+                    <br/>
+                    <br/>
+                    <!-- <span class="scrollto glyphicon glyphicon-arrow-down margin-left-50 white" elm="#section-3"></span> -->
+                </div>
+                <div class="col-md-4">
+                    <!-- Free software logo from https://upload.wikimedia.org/wikipedia/commons/3/31/Free_and_open-source_software_logo_%282009%29.svg (Found at: ) -->
+                    <center><img src="images/html5.svg" style="height: 30vh; margin-top: 10vh;"/></center>
+                </div>
+            </div>
+        </div>
+        <div class="section" id="login-section" style="height: 10vh; background-color: rgb(96, 165, 218);">
+            <center>
+                <div id="login-1">
+                    <input type="text" id="username-input" class="login-input" placeholder="E-mail"/>
+                    <input type="password" id="password-input" class="login-input" placeholder="Password"/>
+                    <button class="login-button" id="login-btn">Log in</button>
+                    <button class="login-button" id="createuser-btn">Create user</button>
+                </div>
+                <div id="login-2">
+                    <a href="index.html">Go to RollCall Webapp</a>
+                </div>
+            </center>
+        </div>
+        <div class="section dark white osl big" id="links-section" style="height: 40vh; padding-top: 10px;">
+            <div class="container-fluid">
+                <div class="col-md-4"></div>
+                <div class="col-md-2">
+                    <a href="license.html">License</a>
+                </div>
+                <div class="col-md-2">
+                    <a href="privacy.html">Privacy</a>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="myui.js"></script>
+        <script type="text/javascript" src="menu.js"></script>
+        <script type="text/javascript">
+            try {
+                var username = login.getEmail();
+                $("#login-1").remove();
+            } catch(e) {
+                $("#login-2").remove();
+                var doLogin = function() {
+                    var uname = $("#username-input")[0].value;
+                    var password = $("#password-input")[0].value;
+                    login.login(uname, password, function(result) {
+                        if(result.type == "fail") {
+                            bootbox.alert("Failed to log in: " + result.data.code);
+                        } else {
+                            window.location.href = "index.html";
+                        }
+                    });
+                }
+                $("#login-btn").on("click", function() {
+                    doLogin();
+                });
+                $("#username-input, #password-input").on("keypress", function(e) {
+                    if(e.which == 13) {
+                        doLogin();
+                    }
+                });
+                $("#createuser-btn").on("click", function() {
+                    var uname = $("#username-input")[0].value;
+                    var password = $("#password-input")[0].value;
+                    login.createUser(uname, password, function(result) {
+                        if(result.type == "success") {
+                            login.login(uname, password, function(result) {
+                                if(result.type != "success") {
+                                    alert("Please report this as a bug, and attach this information: " + JSON.stringify(result));
+                                } else {
+                                    window.location.href = "index.html";
+                                }
+                            });
+                        } else {
+                            bootbox.alert("Failed to create user: " + result.data.code);
+                        }
+                    })
+                });
+            }
+        </script>
+    </body>
+</html>

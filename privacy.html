@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!--
+    RollCall: Peer-to-peer communications and encrypted messaging in HTML5
+    Copyright (C) 2015 Ethan White.
+
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation, version 2; no
+    other versions or revisions may be used under any circumstances.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program, likely available in license.txt; if not, write to the
+    Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+    Boston, MA  02110-1301, USA.
+-->
+<html>
+    <!-- TODO: Imperminance of the status quo -->
+    <head>
+        <meta charset="UTF-8"/>
+        <title>RollCall Privacy</title>
+        <!-- JQuery -->
+        <script type="text/javascript" src="jquery-1.11.1.min.js"></script>
+        <!-- Bootstrap -->
+        <script type="text/javascript" src="btsp/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="btsp/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="btsp/css/bootstrap-theme.min.css"/>
+        <!-- VelocityJS -->
+        <script type="text/javascript" src="velocity.js"></script>
+        <!-- Bootbox -->
+        <script type="text/javascript" src="bootbox.min.js"></script>
+        <!-- My stylesheet -->
+        <link rel="stylesheet" type="text/css" href="styles_other.css"/>
+        <!-- Firebase for login -->
+        <script type="text/javascript" src="firebase.js"></script>
+        <script type="text/javascript" src="login.js"></script>
+    </head>
+    <body>
+        <div style="width: 100%; height: 40vh" class="dark white osl big center">
+            <br/>
+            <br/>
+            Everything personal is encrypted.<br/>
+            That's our privacy policy in four words.
+        </div>
+        <div style="width: 60vw; font-size: 18px; margin-left: 20vw; margin-bottom: 40vh;">
+                <span class="title-main">"Why should I care?"</span>
+            RollCall has real privacy. But, you say, "Why should I care? I use Google, and it tracks me, and I use Chrome, and it tracks me, and I use Windows, which tracks me,
+            too (albeit much more insidiously)."
+            OK. Here it goes.<br/>
+            <br/>
+            Twenty years ago, privacy was a big concern for computer systems. But now (possibly thanks to a massive propaganda campaign by the American government and media),
+            few people truly care about privacy (or say they do, at least). Here's an extreme example. In many books (including George Orwell's <i>1984</i>, the pinnacle of this genre),
+            a society is depicted in which many fundamental freedoms really do not exist. One of these freedoms that is violated almost 100% of the time is privacy. In these societies
+            without privacy, any expressions of disagreement with the government is frowned upon, if not illegal. This is used as a means of information supression; if anyone attempts
+            to rally support against the government, the authorities know instantly, thanks to the spying; then, the dissident is labeled a terrorist, threat to national security, etc.,
+            and supressed. When you let one freedom fall, the others fall like dominoes; right now, privacy is under the most threat, yet is most important.
+                <span class="title-main">"But I don't care about privacy" or "I have nothing to hide"</span>
+            Watch <a href="http://www.ted.com/talks/glenn_greenwald_why_privacy_matters">this</a> TED talk. Glenn Greenwald explains it much better than I do. In short:<br/>
+            <br/>
+            <ul>
+                <li>
+                    People often say I have nothing to hide, when they really do. For example, you (the reader) probably have an e-mail account or online banking account.
+                    I'm going to assume you have a password on it [if not, pretend you do for the sake of argument]. Why do you keep that password a secret? Why don't you instead display it
+                    the entire world? Because you care about privacy. Even though you're doing nothing wrong, there is a certain level of expected privacy inherent in being human.
+                </li>
+                <li>
+                    If you truly don't care about privacy, why don't you tell me the password to your online banking account, or your e-mail; I promise I won't send any e-mails, or transfer
+                    any money. [Don't actually do that; if you do, read the "No warranty" section of the license first.] Glenn Greenwald claims to make that offer every time someone uses that
+                    point on him, and has (unsurprisingly) never had anyone ever take him up on it.
+                </li>
+                <li>
+                    That's about the level of accountability; there's no judicial oversight. At the NSA, where over 100,000 people have access to everything you have ever sent or recieved on Skype,
+                    any e-mails or text messages, the metadata on phone calls (and it is suspected that they also have access to the contents), your Google search history, and a <i>lot</i> of
+                    data from Windows, there was a practice of trading nude or partially nude photographs aquired "incidentally" to mass-surveilance and trying to guess what the occasion was.
+                    I don't really think I have to explain why you shouldn't be letting these people see everything you have done, are doing or will ever do on the internet.
+                </li>
+            </ul>
+                <span class="title-main">Measures that RollCall takes</span>
+            Although I can't go into too many details without getting very technical, here's an overview:
+            <ul>
+                <li>
+                    Messages are encrypted using a hybrid
+                    <a href="https://en.wikipedia.org/wiki/RSA_%28cryptosystem%29">RSA</a>/<a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES</a>
+                    architecture. A quick overview of how RSA works: Alice wants to send a message to Bob, so she encrypts the messsage with Bob's public key. The only person who can read it,
+                    at that point, is Bob; not even Alice can read it after she's encrypted it. Bob then decrypts it with his private key. (If anyone discovered his private key, then they
+                    could read the message, too, so it is imperative that the private key is secured). Also, AES is just a symmetric key encryption scheme; you use the same key to encrypt it as
+                    decrypt it.<br/>
+                    When Charlie sends a message to Denis using RollCall, it contains the AES key, encrypted using RSA with Denis's public key, and the message, encrypted with the AES key
+                    (uniquely generated for each message). When Denis goes to decrypt it, he first goes to the AES key, and decrypts it using his RSA private key, and the decrypts the
+                    message with the RSA key he just decrypted.<br/>
+                    <div style="height: 10px;"></div>
+                    Fun fact: RSA stands for Rivest-Shamir-Adleman, the three inventors of the system.
+                </li>
+                <li>
+                    For calls, we rely on the encryption that is required by the WebRTC standard. In recent versions of Firefox are <i>signifigantly</i> than Chromium (Chrome and Opera).<br/>
+                    <div style="height: 10px;"></div>
+                    Here's the technical description of how Firefox is better: Firefox, starting from Firefox 38, requires the use of Perfect Forward Secrecy, in the form of Diffie-Hellman
+                    key exchange or Elliptic Curve Diffie-Hellman key exchange. This means that the private key is generated uniquely every time, so if it is compromized, it only compromizes
+                    one session (as opposed to with RSA, where it compromizes every session).
+                </li>
+            </ul>
+                <span class="title-main">Privacy policy</span>
+            As described above, RollCall uses state-of-the-art encryption technology. By the time your data is decrypted, you will have been dead for hundreds of years (accounting for
+            Moore's law), unless we become immortal of course.<br/>
+            <br/>
+            Everything that could be considered personal is encrypted, besides the e-mail address. This means messasges and conversations. Details will be published soon; for now,
+            just look at the source code.
+            <br/>
+            <br/>
+            Another part of our privacy policy is covered by our license. Here it is:
+            <div style="padding-left: 3vw; padding-right: 3vw;">
+                <span class="osl">11</span>. BECAUSE THE PROGRAM IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN
+                OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING,
+                BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS
+                WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.<br/>
+                </br/>
+                <span class="osl">12</span>. IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY
+                AND/OR REDISTRIBUTE THE PROGRAM AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF
+                THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A
+                FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.<br/>
+                <br/>
+                <span class="osl">[License Header]</span> This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+                MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+            </div>
+            Basically, I tried to make it private, but AM NOT LIABLE for ANY LACK OF SECURITY OR PRIVACY. <i>That</i> is our privacy policy.<br/>
+            [Real confidence-booster, eh?]<br/>
+            <br/>
+            However, I am <b>very</b> confident in the state-of-the-art encryption technology that is used. It would take a billion billion years to break the encryption used on the
+            messages and thousands of dollars are put behind the conversation encryption. If a security bug is found, the discoverer will be displayed prominently throughout RollCall.
+            Additionally, if one message is decrypted, every other one has a different encryption key, so you'd just have to try again (unless you factor the RSA public key, which could take
+            hundreds of millions of years).
+        </div>
+
+        <script type="text/javascript" src="menu.js"></script>
+    </body>
+</html>

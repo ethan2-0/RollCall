@@ -1,0 +1,25 @@
+.login-input {
+    color: white;
+    height: 8vh;
+    margin-top: auto;
+    background: none;
+    border: none;
+    border-radius: none;
+    width: 30vw;
+}
+#login-section {
+    font-size: 5vh;
+    color: white;
+    font-family: "Open Sans Light";
+    padding-top: 0.6vh;
+}
+.login-button {
+    border: none;
+    border-radius: 10px;
+    background-color: rgb(68, 149, 212);
+    padding: 6px;
+    transition: background-color 0.4s;
+}
+.login-button:hover {
+    background-color: rgb(58, 127, 180);
+}

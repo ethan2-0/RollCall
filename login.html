@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<!--
+    RollCall: Peer-to-peer communications and encrypted messaging in HTML5
+    Copyright (C) 2015 Ethan White.
+
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation, version 2; no
+    other versions or revisions may be used under any circumstances.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program, likely available in license.txt; if not, write to the
+    Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+    Boston, MA  02110-1301, USA.
+-->
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Login - RollCall</title>
+        <!-- JQuery -->
+        <script type="text/javascript" src="jquery-1.11.1.min.js"></script>
+        <!-- Bootstrap -->
+        <script type="text/javascript" src="btsp/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="btsp/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="btsp/css/bootstrap-theme.min.css"/>
+        <!-- JQuery UI -->
+        <script type="text/javascript" src="jquery-ui.js"></script>
+        <link rel="stylesheet" type="text/css" href="jquery-ui.css">
+        <!-- VelocityJS -->
+        <script type="text/javascript" src="velocity.js"></script>
+        <!-- Bootbox -->
+        <script type="text/javascript" src="bootbox.min.js"></script>
+        <!-- My stylesheet -->
+        <link rel="stylesheet" type="text/css" href="styles_other.css"/>
+        <!-- Firebase -->
+        <script type="text/javascript" src="firebase.js"></script>
+        <!-- Login styles -->
+        <!-- <link rel="stylesheet" type="text/css" href="login.css"/> -->
+        <link rel="stylesheet" type="text/css" href="styles_other.css"/>
+    </head>
+    <body>
+        <div class="dark screen-width osl title center white" style="height: 80vh; padding-top: 5vh;">
+            Log in to RollCall
+            <center style="margin-top: 15vh;">
+                <input type="text" id="username" placeholder="E-mail" class="plain white" style="width: 40vw;"/><br/>
+                <input type="password" id="password" placeholder="Password" class="plain white" style="width: 40vw;"/><br/>
+                <button class="my-button" type="button" id="log-in">Log in</button>
+                <button class="my-button" type="button" id="create-user">Create user</button>
+                <!-- <button class="btn btn-default" type="button" id="logout">Log out</button> -->
+            </center>
+        </div>
+        <div class="loading-icon" id="loading-thingy" style="position: absolute;"></div>
+        <!-- My login -->
+        <script type="text/javascript" src="login.js"></script>
+        <script type="text/javascript">
+            // Position the loading thingy
+            //TODO: Reposition on reload
+            (function() {
+                //Just to isolate the local variables.
+                var top = Math.floor($("#password").offset().top - $("#loading-thingy").height() / 2);
+                var left = Math.floor(window.innerWidth / 2 - $("#loading-thingy").width() / 2)
+                $("#loading-thingy").css("top", top + "px")
+                    .css("left", left + "px")
+                    .hide();
+            })();
+            function loadingOn() {
+                $("#loading-thingy").velocity("fadeIn");
+            }
+            function loadingOff() {
+                $("#loading-thingy").velocity("fadeOut");
+            }
+            // Meat and potatoes
+            $("#log-in").on("click", function() {
+                loadingOn();
+                $("#status").html("Logging in...");
+                login.login($("#username")[0].value, $("#password")[0].value, function(data) {
+                    if(data.type == "fail") {
+                        $("#status").html("Failure: " + data.data.code)
+                        bootbox.alert("Failed to log in: " + data.data.code); //TODO: More user-friendly
+                        loadingOff();
+                    } else {
+                        $("#status").html("Logged in as " + data.data.email + " as UID " + data.data.uid);
+                        window.location.href = "index.html";
+                    }
+                });
+            });
+            $("#create-user").on("click", function() {
+                loadingOn();
+                $("#status").html("Creating user...");
+                var uname = $("#username")[0].value;
+                var password = $("#password")[0].value;
+                login.createUser(uname, password, function(data) {
+                    if(data.type == "success") {
+                        $("#status").html("Success!");
+                        //Now, log in.
+                        login.login(uname, password, function(error, data) {
+                            if(error.type != "success") {
+                                alert("Umm... how is this possible? Report this error: " + JSON.stringify(error));
+                                loadingOff();
+                                return;
+                            }
+                            window.location.href = "index.html";
+                        });
+                    } else {
+                        loadingOff();
+                        $("#status").html("Failure: " + data.data);
+                        bootbox.alert("Failed to create user: " + data.data.code);
+                    }
+                });
+            });
+            $("#logout").on("click", function() {
+                $("#status").html("Logging out...");
+                login.logout();
+                $("#status").html("Logged out.");
+            });
+            $(document).on("keypress", function(e) {
+                if(e.which == 13) {
+                    $("#log-in")[0].click();
+                }
+            });
+        </script>
+        <!-- Menu -->
+        <script type="text/javascript" src="menu.js"></script>
+        <!-- My UI thingies -->
+        <script type="text/javascript" src="myui.js"></script>
+        <script type="text/javascript">
+            initRsa = false;
+        </script>
+        <script type="text/javascript" src="forge.min.js"></script>
+        <script type="text/javascript" src="cryptutil.js"></script>
+    </body>
+</html>

@@ -1,0 +1,481 @@
+/*
+ * RollCall: Peer-to-peer communications and encrypted messaging in HTML5
+ * Copyright (C) 2015 Ethan White.
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation, version 2; no
+ * other versions or revisions may be used under any circumstances.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program, likely available in license.txt; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA  02110-1301, USA.
+*/
+@font-face {
+    font-family: 'Open Sans Light';
+    src: url('fonts/OpenSans-Light-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/OpenSans-Light-webfont.woff') format('woff'), url('fonts/OpenSans-Light-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal
+}
+@font-face{
+    font-family:'Open Sans';
+    src:url(http://mozorg.cdn.mozilla.net/media/fonts/OpenSans-Regular-webfont.eot);
+    src:url(http://mozorg.cdn.mozilla.net/media/fonts/OpenSans-Regular-webfont.eot?#iefix) format('embedded-opentype'), url(http://mozorg.cdn.mozilla.net/media/fonts/OpenSans-Regular-webfont.woff) format('woff'),url(http://mozorg.cdn.mozilla.net/media/fonts/OpenSans-Regular-webfont.ttf) format('truetype'),url(http://mozorg.cdn.mozilla.net/media/fonts/OpenSans-Regular-webfont.svg#OpenSansRegular) format('svg');
+    font-weight:400;
+    font-style:normal
+}
+.title {
+    font-family: "Open Sans Light", Arial, sans-serif;
+}
+.title-big {
+    font-size: 36px;
+}
+.title-medium {
+    font-size: 28px;
+}
+.bold {
+    font-weight: bold;
+}
+.monospace {
+    font-family: monospace;
+}
+#me {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    transform: scale(0.5, 0.5);
+    -webkit-transform: scale(0.5, 0.5);
+    -o-transform: scale(0.5, 0.5);
+}
+#my-video {
+    width: 640px;
+    height: 480px;
+}
+.call-item {
+    box-shadow: 0px 0px 3px 2px white;
+}
+#call-controls {
+    padding: 6px;
+    border-radius: 3px;
+    background-color: white;
+}
+#their-video {
+    width: 640px;
+    height: 480px;
+}
+#them {
+    position: absolute;
+    left: 30px;
+    top: 10px;
+}
+#call-controls {
+    position: absolute;
+    left: 30px;
+    bottom: 30px;
+}
+#call-layer {
+    background-color: rgb(51, 51, 51);
+}
+.video-title {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: white;
+    font-family: "Open Sans Light";
+    font-size: 20px;
+    background-color: rgb(50, 50, 50);
+    border-radius: 5px;
+    padding: 3px;
+}
+.layer {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+
+#home-name {
+    font-size: 72px;
+    font-family: "Open Sans Light", Arial, sans-serif;
+}
+#home-status {
+    font-size: 36px;
+    font-family: "Open Sans Light", Arial, sans-serif;
+}
+.status {
+    cursor: default;
+}
+.status-circle {
+    transition: background-color 1s;
+    -webkit-transition: background-color 1s;
+    -moz-transition: background-color 1s;
+}
+#my-video {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+#their-video {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+.status.status-online {
+    color: green;
+}
+.status.status-offline {
+    color: red;
+}
+.status.status-online:after {
+    content: "Online";
+}
+.status.status-offline:after {
+    content: "Offline";
+}
+.status-circle {
+    width: 15px;
+    border-radius: 50%;
+    /*display: inline;*/
+    height: 15px;
+    display: inline-block;
+}
+.status-circle.status-online {
+    background-color: green;
+}
+.status-circle.status-offline {
+    background-color: red;
+}
+#home-portrait {
+    /*background-image: url(Bill-OReilly-finger-point.jpg);*/
+    width: 100px;
+    height: 150px;
+    margin-top: 4px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 4px;
+}
+.btn-none {
+    color: #333 !important;
+}
+.btn-none:hover {
+    color: #333 !important;
+    text-decoration: none !important;
+    background-color: rgb(247, 246, 246);
+}
+#home-name-status {
+    border-left: 1px solid #EEE;
+}
+
+.better-list {
+    background-color: rgb(51, 51, 51);
+    display: block;
+    position: relative;
+    padding: 10px 15px;
+    color: white;
+    height: 100%;
+}
+.bl-big {
+    font-size: 24px;
+}
+.no-padding {
+    padding: 0px !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    margin: 0px !important;
+}
+#active-box {
+    position: absolute;
+    background-color: #BB3E32; /*rgb(227, 113, 81);*/
+    z-index: 100;
+    width: 10px;
+    transition: left 0.4s, top 0.4s, width 0.4s, height 0.4s;
+    -webkit-transition: left 0.4s, top 0.4s, width 0.4s, height 0.4s;
+}
+.z-none {
+    z-index: 0;
+}
+.z-low {
+    z-index: 100;
+}
+.z-med {
+    z-index: 1000;
+}
+.z-large {
+    z-index: 10000;
+}
+.z-big {
+    z-index: 100000;
+}
+.z-huge {
+    z-index: 1000000;
+}
+.z-gigantic {
+    z-index: 1000000;
+}
+.z-very {
+    z-index: 10000000;
+}
+#home-quote {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    text-align: right;
+    font-size: 26px;
+    width: 300px;
+}
+#home-quote-symbol {
+    position: absolute;
+    top: -5px;
+    color: #DDDDDD;
+    right: 320px;
+    font-size: 100px;
+    font-family: "Times New Roman", Times, serif;
+}
+#contextmenu {
+    background-color: white;
+    border: 1px solid #EEE;
+    border-radius: 5px;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+.chat-message {
+    font-size: 18px;
+}
+.chat-message-sender {
+    font-family: Arial, sans-serif;
+    color: rgb(67, 134, 252);
+    margin-right: 5px;
+}
+.chat-message-content {
+
+}
+#home-chat {
+    float: bottom;
+    position: absolute;
+    bottom: 5px;
+}
+body {
+    overflow: hidden;
+}
+.bl-bottom {
+    position: absolute;
+    bottom: 10px;
+}
+#setup {
+    /* All browsers that support webrtc should support this. */
+    position: absolute;
+    width: 82vw;
+    left: 8vw;
+    height: 82vh;
+    top: 8vh;
+    background-color: white;
+    /*border: 1px solid #EEE;*/
+    color: black;
+    z-index: 500000;
+    background-color: rgb(251, 251, 251);
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    box-shadow: 0 0 10px rgba(51, 51, 51, 0.5);
+}
+#setup-title {
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    color: white;
+    background-color: rgb(72, 72, 77);
+    height: 50px;
+    font-size: 35px;
+    font-family: "Open Sans Light";
+}
+.screen-width {
+    width: 100vw;
+}
+.screen-height {
+    height: 100vh;
+}
+#setup-next {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    font-family: "Open Sans Light";
+}
+.opensans {
+    font-family: "Open Sans Light";
+    color: rgb(66, 78, 90);
+}
+.text-center {
+    text-align: center;
+}
+.border-left {
+    border-left: 1px solid #EEE;
+}
+.border-right {
+    border-right: 1px solid #EEE;
+}
+.text-light {
+    color: rgb(105, 105, 105);
+}
+.text-normal {
+    color: rgb(77, 77, 77);
+}
+.title {
+    font-size: 64px;
+}
+.text-md {
+    font-size: 24px;
+}
+.padding-left-12 {
+    padding-left: 12px;
+}
+.small-br {
+    height: 10px;
+}
+#chat-messages {
+    overflow-y: scroll;
+    height: 20vh;
+    /* TODO: Fix */
+    width: 82.5vw;
+}
+input[type=text].plain {
+    width: calc(100% - 20px);
+    border: none;
+    border-radius: none;
+    border-top: 1px solid #dadada;
+    margin-right: 10px;
+}
+#menu-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    transition: background-color 0.5s, color 0.5s;
+    -webkit-transition: background-color 0.5s, color 0.5s;
+    background-color: transparent;
+    border-radius: 4px;
+    width: 40px;
+    height: 40px;
+    font-size: 25px;
+    padding-left: 7px;
+    padding-top: 2px;
+    cursor: pointer;
+}
+#menu-icon:hover {
+    background-color: rgb(51, 51, 51);
+    color: white;
+}
+.sidebar {
+    height: 100vh;
+    width: 15vw;
+    background-color: #333;
+    position: absolute;
+    right: -15vw;
+
+    transition: right 0.4s;
+    -webkit-transition: right 0.4s;
+    -moz-transition: right 0.4s;
+    transition-timing-function: ease-in-out;
+    -webkit-transition-timing-function: ease-in-out;
+    -moz-transition-timing-function: ease-in-out;
+    
+    color: white;
+    top: 0px;
+}
+.sidebar-close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 100;
+    font-size: 40px;
+    cursor: pointer;
+}
+.sidebar-item {
+    font-size: 18px;
+    cursor: pointer;
+    font-family: "Open Sans Light", sans-serif;
+}
+.sidebar-items {
+    margin-top: 50px;
+    margin-left: 15px;
+}
+.white {
+    color: white;
+}
+.opensans.big {
+    font-size: 64px;
+}
+/*https://color.adobe.com/create/color-wheel/?base=2&rule=Analogous&selected=1&name=My%20Color%20Theme&mode=rgb&rgbvalues=0.09144506582230483,1,0.4496308382947599,0.3764705882352941,0.6470588235294118,0.8549019607843137,0.5259222120021985,0.14144506582230487,1,0.91,0.0832150098982974,0.17973426235130618,1,0.562832042208028,0.09144506582230483&swatchOrder=0,1,2,3,4*/
+/*
+#17FF73
+#60A5DA
+#8624FF
+#E8152E
+#FF9017
+*/
+.pjs-color {
+    background-color: rgb(51, 51, 51);
+}
+.icon {
+    margin-top: 10px;
+    box-shadow: 0px 0px 3px 3px white !important;
+    background-color: #EEE;
+    margin-left: auto;
+    width: 64px;
+}
+.scrollto {
+    border-radius: 50%;
+    border: 1px solid rgb(51, 51, 51);
+    font-size: 60px;
+    padding: 10px;
+    padding-right: 15px;
+    padding-top: 15px;
+    cursor: pointer;
+}
+.scrollto.white {
+    border: 1px solid white !important;
+    color: white;
+}
+.credit > img {
+    margin-top: auto;
+    max-height: 10vh;
+}
+.credit {
+    font-family: "Open Sans Light";
+    font-size: 48px;
+    height: 100%;
+    display: inline-block;
+    padding-top: 10vh;
+}
+.credit-row {
+    height: 30vh;
+    text-align: center;
+}
+.logged-in-title {
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    font-size: 16px;
+    font-family: "Open Sans Light";
+}
+::-moz-selection {
+    background-color: #b3d4fc;
+}
+::-webkit-selection {
+    background-color: #b3d4fc;
+}
+::-ms-selection {
+    background-color: #b3d4fc;
+}
+::selection {
+    background-color: #b3d4fc;
+}
+.left-sidebar-faded {
+    color: rgb(210, 210, 210);
+    font-family: "Open Sans Light";
+}

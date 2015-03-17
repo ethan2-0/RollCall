@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<!--
+    RollCall: Peer-to-peer communications and encrypted messaging in HTML5
+    Copyright (C) 2015 Ethan White.
+
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation, version 2; no
+    other versions or revisions may be used under any circumstances.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program, likely available in license.txt; if not, write to the
+    Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+    Boston, MA  02110-1301, USA.
+-->
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>PeerJS Thingy</title>
+        <!-- JQuery -->
+        <script type="text/javascript" src="jquery-1.11.1.min.js"></script>
+        <!-- Bootstrap -->
+        <script type="text/javascript" src="btsp/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="btsp/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="btsp/css/bootstrap-theme.min.css"/>
+        <!-- JQuery UI -->
+        <script type="text/javascript" src="jquery-ui.js"></script>
+        <link rel="stylesheet" type="text/css" href="jquery-ui.css">
+        <!-- My stylesheet -->
+        <link rel="stylesheet" type="text/css" href="stylesheet.css">
+        <!-- Firebase -->
+        <script type="text/javascript" src="firebase.js"></script>
+        <!-- Login options -->
+        <script type="text/javascript">
+            loginCreateFb = false;
+        </script>
+        <!-- Login -->
+        <script type="text/javascript" src="login.js"></script>
+        <!-- Some utility functions. -->
+        <script type="text/javascript" src="helper.js"></script>
+        <!-- PeerJS -->
+        <script type="text/javascript" src="peer.js"></script>
+        <!-- VelocityJS -->
+        <script type="text/javascript" src="velocity.js"></script>
+        <!-- Bootbox -->
+        <script type="text/javascript" src="bootbox.min.js"></script>
+    </head>
+    <body>
+        <!-- <div id="dialog" title="Answer call?">
+            Are you sure you want to answer?
+        </div> -->
+        <div id="setup" style="display: none;">
+            <div id="setup-title">Setting things up</div>
+            <div id="setup-pages">
+                <div id="setup-page-start" class="setup-page">
+                    <div class="opensans title text-center">Welcome to PeerJS.</div>
+                    <div class="container-fluid" style="width: 100%; height: 80%;">
+                        <div class="col-md-4" style="height: 100%;">
+                            <div class="opensans text-center" style="font-size: 32px;">Talk anywhere</div>
+                            <div class="container-fluid text-light">
+                                <div class="col-md-6" style="font-size: 1.9vh;">
+                                    <div style="font-size: 18px;" class="text-center text-normal">Runs in any (modern) browser</div>
+                                    PeerJS works on Firefox 22+, Chrome 23+, Opera 18+, Firefox OS, Firefox for Android, Chrome for android, and more. That's over 1 BILLION devices!
+                                </div>
+                                <div class="col-md-6" style="font-size: 1.9vh;">
+                                    <div style="font-size: 18px;" class="text-center text-normal">Wherever you are, your phone is.</div>
+                                    PeerJS works on Firefox for Android, Chrome for Android, and Firefox OS. Wherever you are, you can talk, cheaper than making a phone call.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="height: 100%;">
+                            <div class="opensans text-center" style="font-size: 32px;">Free as in freedom</div>
+                            <div class="container-fluid text-light">
+                                <div class="col-md-6" style="font-size: 1.9vh;">
+                                    <div style="font-size: 18px;" class="text-center text-normal">Skype tracks you.<br/>We can't; it's just not possible.</div>
+                                    When you chat with PeerJS, it's fully encrypted, end-to-end, and never goes through our servers. Soon to come: message encryption.
+                                </div>
+                                <div class="col-md-6" style="font-size: 1.9vh;">
+                                    <div style="font-size: 18px;" class="text-center text-normal">Free and open source software</div>
+                                    PeerJS is free software, licensed under the GNU GPL, version 2 (with the exception of our third-party
+                                    libraries, but they're free software too). That means you are free to use and modify it. Contrast this with Skype; you have
+                                    no idea what Skype's code looks like.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="height: 100%;">
+                            <div class="opensans text-center" style="font-size: 32px;">High quality</div>
+                            <div class="container-fluid text-light">
+                                <div class="col-md-6" style="font-size: 1.9vh;">
+                                    <div style="font-size: 18px;" class="text-center text-normal">The same quality as your gear.</div>
+                                    If you're using the 1080p 30fps camera on your laptop, PeerJS will display 1080p, 30fps. Period. We can do everything your recording gear
+                                    can.
+                                </div>
+                                <div class="col-md-6" style="font-size: 1.9vh;">
+                                    Skype makes you pay for many advanced features that give you a better quality call. Over the years, it's cost more and given less. PeerJS
+                                    is 100% free.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="setup-page-access-mic" class="setup-page">
+                    <div class="opensans title text-center">We need access to a few things.</div>
+                    <div class="opensans text-center" style="font-size: 32px;">What access do you feel comfortable with?</div>
+                    <div class="small-br"></div>
+                    <div class="container-fluid" style="width: 100%;">
+                        <div class="row">
+                            <div class="col-md-5"></div>
+                            <div class="col-md-7">
+                                <table><tr>
+                                    <td><div class="yesno" checked="true" id="video-yesno"></div></td>
+                                    <td class="opensans text-md padding-left-12">Video</td>
+                                </tr></table>
+                            </div>
+                        </div>
+                        <div class="small-br"></div>
+                        <div class="row">
+                            <div class="col-md-5"></div>
+                            <div class="col-md-7">
+                                <table><tr>
+                                    <td><div class="yesno" checked="true" id="audio-yesno"></div></td>
+                                    <td class="opensans text-md padding-left-12">Audio</td>
+                                </tr></table>
+                            </div>
+                        </div>
+                        <div class="small-br"></div>
+                        <div class="row">
+                            <div class="col-md-5"></div>
+                            <div class="col-md-7">
+                                <table><tr>
+                                    <td><div class="yesno" checked="true" id="notification-yesno"></div></td>
+                                    <td class="opensans text-md padding-left-12">Notifications</td>
+                                </tr></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="setup-page-access-confirm" class="setup-page">
+                    <div class="opensans title text-center">That's it.</div>
+                    <div class="opensans text-center" style="font-size: 32px;">You're now setup to use PeerJS</div>
+                    <div>
+                        <ul>
+                            <li>
+                                Every time you load this page<!-- TODO: Re-word -->, we'll ask you for the access you specified.
+                                If you want to, you can even set your browser to automatically accept it, but if you don't, that's cool, too.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <button id="setup-next" class="btn btn-primary btn-lg">Next</button>
+        </div>
+        <div id="active-box"></div>
+        <div id="call-layer" class="layer screen-height screen-width">
+            <div id="them">
+                <video id="their-video" class="call-item" autoplay></video>
+                <!-- <div class="video-title" id="their-name">Ethan</div> -->
+            </div>
+            <div id="call-controls" class="call-item">
+                <button class="btn btn-danger" id="hang-up">Hang up</button>
+            </div>
+            <div id="me">
+                <video id="my-video" muted="true" class="call-item" autoplay></video>
+            </div>
+        </div>
+        <div id="home-layer" class="layer">
+            <div class="container-fluid screen-width screen-height no-padding" data-menu="menu1">
+                <div class="col-md-2 screen-height" style="background-color: rgb(51, 51, 51)">
+                    <div class="better-list bl-big" id="username-list">
+                    </div>
+                </div>
+                <div class="col-md-10 screen-height">
+                    <table>
+                        <tr>
+                            <td>
+                                <div id="home-portrait" class="scale"></div>
+                            </td>
+                            <td id="home-name-status">
+                                <div id="home-name">Bill O'Reilly</div>
+                                <div id="home-status"><div class="status status-online"></div></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <button type="button" class="btn btn-primary" id="btn-call"><span class="glyphicon glyphicon-earphone"></span> Call</button>
+                                <button type="button" class="btn btn-danger" id="btn-ignore"><span>&#x2717;</span> Excommunicate</button>
+                                <!-- <button type="button" class="btn btn-link btn-none">Hi!</button> -->
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- <div id="home-quote">Tides go in, tides go out. You can't explain that.</div>
+                    <div id="home-quote-symbol">&ldquo;</div> -->
+                    <div id="home-chat">
+                        <div id="chat-messages">
+                            <div class="chat-message">
+                                <span class="chat-message-sender">Neil DeGrasse Tyson</span>
+                                <span class="chat-message-content">If you said that four hundred years ago, then maybe...? But then, it's the god of the gaps
+                                argument, and so you will have an ever-receeding god. So, you can say that, it's just I don't have a use for people like you
+                                in my lab.</span>
+                            </div>
+                        </div>
+                        <input type="text" id="chat-message" placeholder="Chat..." class="plain"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="credits-layer" class="layer screen-width screen-height">
+            <div class="container-fluid">
+                <div class="row credit-row">
+                    <div class="col-md-4 credit"><img src="logos/jquery.png"/></div>
+                    <div class="col-md-4 credit"><img src="logos/peerjs.png"/></div>
+                    <div class="col-md-4 credit"><img src="logos/bootstrap.png"/></div>
+                </div>
+                <div class="row credit-row">
+                    <div class="col-md-4 credit"><img src="logos/jqueryui.png"/></div>
+                    <div class="col-md-4">[Put something here]</div>
+                    <div class="col-md-4 credit">Velocity.js</div>
+                </div>
+                <div class="row credit-row">
+                    <div class="col-md-4 credit">Bootbox.js</div>
+                    <div class="col-md-4 credit"><img src="logos/glyphicons.svg"/></div>
+                    <div class="col-md-4 credit"><img src="logos/html5.svg"/></div>
+                </div>
+            </div>
+        </div>
+        <!-- Main Javascript -->
+        <script type="text/javascript" src="forge.min.js"></script>
+        <script type="text/javascript" src="unprefix.js"></script>
+        <script type="text/javascript" src="BigInt.js"></script>
+        <script type="text/javascript" src="cryptutil.js"></script>
+        <script type="text/javascript" src="script.js"></script>
+        <script type="text/javascript" src="core.js"></script>
+        <script type="text/javascript" src="chat.js"></script>
+        <!-- TODO: Credits: Forge and BigInt -->
+        <!-- <script type="text/javascript" src="setup.js"></script> -->
+        <script type="text/javascript">
+            //Asynchronously load scripts
+            function asyncLoad(script) {
+                var elm = $("<script>").attr("type", "text/javascript").attr("src", script);
+                $(document.body).append(elm);
+            }
+            if(localStorage.getItem("peer_setupDone") == null) {
+                asyncLoad("setup.js");
+            }
+            $(window).on("load", function() {
+                asyncLoad("myui.js");
+                asyncLoad("menu.js");
+            });
+        </script>
+    </body>
+</html>
