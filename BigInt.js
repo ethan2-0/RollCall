@@ -61,8 +61,8 @@
 // that when a function is called repeatedly with same-sized parameters, it only allocates
 // memory on the first call.
 //
-// Note that for cryptographic purposes, the calls to Math.random() must 
-// be replaced with calls to a better pseudorandom number generator.
+// Note that for cryptographic purposes, the calls to random() must 
+// be replaced with calls to a better pseudorandom number generator. [I have! I made Math.Math.crand(), based on WebCrypto.]
 //
 // In the following, "bigInt" means a bigInt with at least one leading zero element,
 // and "integer" means a nonnegative integer less than radix.  In some cases, integer 
@@ -181,32 +181,14 @@
 //       sentences that seem to imply it's faster to do a non-modular square followed by a single
 //       Montgomery reduction, but that's obviously wrong.
 ////////////////////////////////////////////////////////////////////////////////////////
-
+if(typeof(window) == "undefined") {
+    window = {
+        crypto: crypto || mozCrypto
+    };
+}
 Math.crand = function() {
-    //Get a cryptographically secure random number.
-    //53 bits of precision
-    //Since we get between 0-255 (8 bits), we can use 6 numbers plus five eights of another.
-    var arr = new Uint8Array(6);
-    window.crypto.getRandomValues(arr);
-    //We need to build a 48-bit number
-    var num = 0;
-    for(var i = 0; i < 6; i++) {
-        num += arr[i] * Math.pow(2, i * 8);
-    }
-    //Now, we have 48 bits; we need 53. So, we need 5 more bits. We need to find n such that n is divisible by 5 and 8. That n happens to be 40, which is 8*5.
-    //So, we need to generate 5 more numbers.
-    var arr2 = new Uint8Array(5);
-    window.crypto.getRandomValues(arr2);
-    //We now have 40 bits we want to squish into 5, so we divide by 8 and take the floor of the result.
-    var num2 = 0;
-    for(var i = 0; i < 5; i++) {
-        num += arr2[i] * Math.pow(2, i * 8);
-    }
-    num2 = Math.floor(num2 / 8);
-    //Concatenate them.
-    num2 += num2 * Math.pow(2, 6 * 8);
-    //Now, we have 53 bits of randness. Move it into the range 0-1.
-    return num * (1 / Math.pow(2, 53));
+    //We have 32 bits of precision
+    return window.crypto.getRandomValues(new Uint32Array(1))[0] * (1 / 4294967296);
 }
 
 //globals
@@ -547,7 +529,7 @@ function randTruePrime_(ans, k) {
         copyInt_(ans, 0);
         for (dd = 1; dd;) {
             dd = 0;
-            ans[0] = 1 | (1 << (k - 1)) | Math.floor(Math.random() * (1 << k)); //random, k-bit, odd integer, with msb 1
+            ans[0] = 1 | (1 << (k - 1)) | Math.floor(Math.crand() * (1 << k)); //random, k-bit, odd integer, with msb 1
             for (j = 1;
                 (j < primes.length) && ((primes[j] & pm) == primes[j]); j++) { //trial division by all primes 3...sqrt(2^k)
                 if (0 == (ans[0] % primes[j])) {
@@ -563,7 +545,7 @@ function randTruePrime_(ans, k) {
     B = c * k * k; //try small primes up to B (or all the primes[] array if the largest is less than B).
     if (k > 2 * m) //generate this k-bit number by first recursively generating a number that has between k/2 and k-m bits
         for (r = 1; k - k * r <= m;)
-        r = pows[Math.floor(Math.random() * 512)]; //r=Math.pow(2,Math.random()-1);
+        r = pows[Math.floor(Math.crand() * 512)]; //r=Math.pow(2,Math.crand()-1);
     else
         r = .5;
 
@@ -659,7 +641,7 @@ function randBigInt_(b, n, s) {
         b[i] = 0;
     a = Math.floor((n - 1) / bpe) + 1; //# array elements to hold the BigInt
     for (i = 0; i < a; i++) {
-        b[i] = Math.floor(Math.random() * (1 << (bpe - 1)));
+        b[i] = Math.floor(Math.crand() * (1 << (bpe - 1)));
     }
     b[a - 1] &= (2 << ((n - 1) % bpe)) - 1;
     if (s == 1)
