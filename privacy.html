@@ -1,22 +1,15 @@
 <!DOCTYPE html>
 <!--
-    RollCall: Peer-to-peer communications and encrypted messaging in HTML5
-    Copyright (C) 2015 Ethan White.
-
-    This program is free software; you can redistribute it and/or
-    modify it under the terms of the GNU General Public License
-    as published by the Free Software Foundation, version 2; no
-    other versions or revisions may be used under any circumstances.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program, likely available in license.txt; if not, write to the
-    Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-    Boston, MA  02110-1301, USA.
+    Copyright (c) 2015 Ethan White. All rights reserved.
+    Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+      1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+      2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation
+         and/or other materials provided with the distribution.
+      3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+    FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+    DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+    WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 <html>
     <!-- TODO: Imperminance of the status quo -->
@@ -54,7 +47,8 @@
             <br/>
             Twenty years ago, privacy was a big concern for computer systems. But now (possibly thanks to a massive propaganda campaign by the American government and media),
             few people truly care about privacy (or say they do, at least). Here's an extreme example. In many books (including George Orwell's <i>1984</i>, the pinnacle of this genre),
-            a society is depicted in which many fundamental freedoms really do not exist. One of these freedoms that is violated almost 100% of the time is privacy. In these societies
+            a society is depicted in which many fundamental freedoms really do not exist. One of these freedoms that is violated almost 100% of the time, and is often the first to go,
+            is privacy. In these societies
             without privacy, any expressions of disagreement with the government is frowned upon, if not illegal. This is used as a means of information supression; if anyone attempts
             to rally support against the government, the authorities know instantly, thanks to the spying; then, the dissident is labeled a terrorist, threat to national security, etc.,
             and supressed. When you let one freedom fall, the others fall like dominoes; right now, privacy is under the most threat, yet is most important.
@@ -69,7 +63,8 @@
                 </li>
                 <li>
                     If you truly don't care about privacy, why don't you tell me the password to your online banking account, or your e-mail; I promise I won't send any e-mails, or transfer
-                    any money. [Don't actually do that; if you do, read the "No warranty" section of the license first.] Glenn Greenwald claims to make that offer every time someone uses that
+                    any money. [Don't actually do that; if you do, read the last paragraph of the license first, and I take no responsibility whatsoever for what happens to it.]
+                    Glenn Greenwald claims to make that offer every time someone uses that
                     point on him, and has (unsurprisingly) never had anyone ever take him up on it.
                 </li>
                 <li>
@@ -104,35 +99,12 @@
                 </li>
             </ul>
                 <span class="title-main">Privacy policy</span>
-            As described above, RollCall uses state-of-the-art encryption technology. By the time your data is decrypted, you will have been dead for hundreds of years (accounting for
-            Moore's law), unless we become immortal of course.<br/>
+            Messages and calls are encrypted. For more details, see above; a more in-depth description will be available soon, but for now, just look at the source code.<br/>
             <br/>
-            Everything that could be considered personal is encrypted, besides the e-mail address. This means messasges and conversations. Details will be published soon; for now,
-            just look at the source code.
+            For everything else, anyone can read it. The exposed information includes your e-mail address. I'm trying to come up with ways to make this more secure, but for now,
+            you'll just have to live with it.<br/>
             <br/>
-            <br/>
-            Another part of our privacy policy is covered by our license. Here it is:
-            <div style="padding-left: 3vw; padding-right: 3vw;">
-                <span class="osl">11</span>. BECAUSE THE PROGRAM IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN
-                OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING,
-                BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS
-                WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.<br/>
-                </br/>
-                <span class="osl">12</span>. IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY
-                AND/OR REDISTRIBUTE THE PROGRAM AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF
-                THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A
-                FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.<br/>
-                <br/>
-                <span class="osl">[License Header]</span> This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-                MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-            </div>
-            Basically, I tried to make it private, but AM NOT LIABLE for ANY LACK OF SECURITY OR PRIVACY. <i>That</i> is our privacy policy.<br/>
-            [Real confidence-booster, eh?]<br/>
-            <br/>
-            However, I am <b>very</b> confident in the state-of-the-art encryption technology that is used. It would take a billion billion years to break the encryption used on the
-            messages and thousands of dollars are put behind the conversation encryption. If a security bug is found, the discoverer will be displayed prominently throughout RollCall.
-            Additionally, if one message is decrypted, every other one has a different encryption key, so you'd just have to try again (unless you factor the RSA public key, which could take
-            hundreds of millions of years).
+            However, do note that this software is distributed with absolutely no warranty whatsoever; though, if you do notice a bug, please report it.
         </div>
 
         <script type="text/javascript" src="menu.js"></script>
