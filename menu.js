@@ -84,19 +84,19 @@ menu.register($("<div>")
 menu.register($("<div>")
     .addClass("sidebar-item")
     .html("About"), function() {
-        window.location.href = "/peerjs/about.html?username=" + uname;
+        window.location.href = "about.html?username=" + uname;
         menu.hide();
     });
 menu.register($("<div>")
     .addClass("sidebar-item")
     .html("License"), function() {
-        window.location.href = "/peerjs/license.html?username=" + uname;
+        window.location.href = "license.html?username=" + uname;
         menu.hide();
     });
 menu.register($("<div>")
     .addClass("sidebar-item")
     .html("Privacy"), function() {
-        window.location.href = "/peerjs/privacy.html?username=" + uname;
+        window.location.href = "privacy.html?username=" + uname;
         menu.hide();
     });
 try {
