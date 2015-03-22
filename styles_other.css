@@ -73,13 +73,13 @@ body {
     right: 10px;
     transition: background-color 0.5s, color 0.5s;
     -webkit-transition: background-color 0.5s, color 0.5s;
-    background-color: transparent;
+    background-color: white;
     border-radius: 4px;
     width: 40px;
     height: 40px;
     font-size: 25px;
     padding-left: 7px;
-    padding-top: 2px;
+    padding-top: 3px;
     cursor: pointer;
 }
 #menu-icon:hover {
