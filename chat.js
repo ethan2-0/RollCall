@@ -12,6 +12,8 @@
 */
 //BigInt.js from http://www.leemon.com/crypto/BigInt.html
 var keyCache = {};
+var prevChatLength = 0;
+var _firstChatGet = true;
 $("#chat-message").keyup(function(e) {
     if (e.keyCode == 13) {
         var thiz = this;
@@ -47,7 +49,9 @@ var handle = function(snapshot) {
     try {
         $("#chat-messages").empty();
         var val = snapshot.val();
+        var length = 0;
         for(var key in val) {
+            length++;
             //For now, we're not worrying about any RSA stuff; that comes later.
             var entry = val[key];
             var from = entry["from"];
@@ -64,6 +68,18 @@ var handle = function(snapshot) {
                     .addClass("chat-message-content")
                     .html(msg)))
         }
+        console.log("-----");
+        console.log(!_firstChatGet);
+        console.log(document.hidden);
+        console.log(prevChatLength != length);
+        console.log("-----");
+        if(!_firstChatGet && document.hidden && prevChatLength != length) {
+            messageAudio.play();
+            showNotification("Message", "From " + activeUser);
+        } else if(_firstChatGet) {
+            _firstChatGet = false;
+        }
+        prevChatLength = length;
     } catch(e) {
         console.log(e);
     }
