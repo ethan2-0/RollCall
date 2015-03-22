@@ -52,7 +52,7 @@ $(".loading-icon").each(function() {
     $(this).append(part0);
     $(this).append(part1);
     var topCovers = false;
-    var test = function() {
+    var updateOnce = function() {
         if(!topCovers) {
             part0.css("height", "20px");
             part0.css("background-color", getNewColor());
@@ -61,7 +61,7 @@ $(".loading-icon").each(function() {
             part1.css("background-color", getNewColor());
         }
         topCovers = !topCovers;
-        setTimeout(test, 800);
+        setTimeout(updateOnce, 800);
     }
-    test();
+    updateOnce();
 });
