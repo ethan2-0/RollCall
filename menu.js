@@ -10,6 +10,9 @@
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+if(typeof(isMainPage) != "boolean") {
+    isMainPage = false;
+}
 var uname = window.location.href.split("=")[1]; //TODO: Improve
 menu = (function() {
     var items = [];
@@ -67,38 +70,51 @@ menu = (function() {
             //Don't append it
         }
     }
+    function navigate(url) {
+        if(isMainPage) {
+            window.open(url, "_blank_" + Math.random());
+        } else {
+            window.location.href = url;
+        }
+    }
     createNode();
     return {
         register: registerItem,
         show: showMenu,
         hide: hideMenu,
-        regen: regen
+        regen: regen,
+        navigate: navigate
     }
 })();
 menu.register($("<div>")
     .addClass("sidebar-item")
     .html("Home"), function() {
-        window.location.href = "index.html?username=" + uname;
+        menu.navigate("index.html?username=" + uname);
         menu.hide();
     });
 menu.register($("<div>")
     .addClass("sidebar-item")
     .html("About"), function() {
-        window.location.href = "about.html?username=" + uname;
+        menu.navigate("about.html?username=" + uname);
         menu.hide();
     });
 menu.register($("<div>")
     .addClass("sidebar-item")
     .html("License"), function() {
-        window.location.href = "license.html?username=" + uname;
+        menu.navigate("license.html?username=" + uname);
         menu.hide();
     });
 menu.register($("<div>")
     .addClass("sidebar-item")
     .html("Privacy"), function() {
-        window.location.href = "privacy.html?username=" + uname;
+        menu.navigate("privacy.html?username=" + uname);
         menu.hide();
     });
+menu.register($("<div>")
+    .addClass("sidebar-item")
+    .html("Source (github)"), function() {
+        menu.navigate("http://github.com/ethan2-0/RollCall");
+    })
 try {
     login.getEmail();
     menu.register($("<div>")
@@ -111,6 +127,6 @@ try {
     menu.register($("<div>")
         .addClass("sidebar-item")
         .html("Log in", function() {
-            window.location.href = "login.html";
+            menu.navigate("login.html");
         }));
 }
