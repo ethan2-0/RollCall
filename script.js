@@ -10,15 +10,19 @@
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+unprefix(document, "hidden");
 //Firebase is defined in helper.js.
 var userRef = firebase.child("users").child(username);
 var activeUser = ""; //The viewed user
-var activeId = "will be populated later (in core.js)"; //OUR id
+var activeId = "will be populated later (in core.js); this is OUR id";
 var incomingCallAudio = new Audio("IncomingCall2.wav");
+var messageAudio = new Audio("message2.wav");
 // $("#dialog").hide();
 $("#btn-call").hide()
     .on("click", function() {
+        loading();
         firebase.child("users").child(encodeUsername(activeUser)).once("value", function(snapshot) {
+            stopLoading();
             var theirId = snapshot.child("active-id").val();
             call(theirId);
         });
@@ -160,7 +164,9 @@ function updateOnline(online) {
 }
 
 function requestCallAnswer(callback) {
-    showNotification("Incoming call", "You're getting called.");
+    if(document.hidden) {
+        showNotification("Incoming call", "You're getting called.");
+    }
     var incomingCallFunc = function() {
         incomingCallAudio.play();
     }
@@ -191,9 +197,15 @@ function requestCallAnswer(callback) {
         }
     });
 }
-
+var _firstTime = true;
 function loadDetails(username) {
+    if(!_firstTime) {
+        loading();
+    } else {
+        _firstTime = false;
+    }
     firebase.child("users").child(encodeUsername(username)).once("value", function(snapshot) {
+        stopLoading();
         $("#home-name").transitionTo($("<span>").html(username));
         var online = false;
         if(getUnixTimestamp() - snapshot.child("last-online").val() < 9) {
@@ -373,11 +385,13 @@ function generateSidebar(usernameListCallback) {
                 .addClass("left-sidebar-faded"))
             .on("click", function() {
                 //TODO: Use my special button that is just the text until hover.
-                bootbox.prompt("What is their name?", function(result) {
+                bootbox.prompt("What's their name?", function(result) {
                     if(result == null) {
                         return;
                     }
+                    loading();
                     firebase.child("users").child(username).child("friends").once("value", function(snapshot) {
+                        stopLoading();
                         var newList = snapshot.val();
                         newList.push(encodeUsername(result));
                         firebase.child("users").child(username).child("friends").set(newList);
@@ -397,7 +411,7 @@ $(function() {
 });
 userRef.child("friends").once("value", function(snapshot) {
     var friends = snapshot.val();
-    if (friends.length > 0) {
+    if (friends.length > 0 && friends != null) {
         //Select the first friend.
         loadDetails(friends[0]);
     } else {
@@ -462,3 +476,9 @@ $(window).on("keypress", function(evt) {
         });
     }
 });
+function loading() {
+    $("#the-loading-icon").velocity("fadeIn");
+}
+function stopLoading() {
+    $("#the-loading-icon").velocity("fadeOut");
+}
