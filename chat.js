@@ -14,6 +14,7 @@
 var keyCache = {};
 var prevChatLength = 0;
 var _firstChatGet = true;
+var expectingUpdate = false;
 $("#chat-message").keyup(function(e) {
     if (e.keyCode == 13) {
         var thiz = this;
@@ -50,6 +51,7 @@ $("#chat-message").keyup(function(e) {
             //Encrypt the message with AES
             var encrypted = aes.encrypt(thiz.value, key);
             var chat = firebase.child("users").child(username).child("chat").child(encodeUsername(activeUser));
+            expectingUpdate = true;
             chat.child(new Date().getTime() + "").set({
                 msg: encrypted,
                 from: username,
@@ -59,6 +61,10 @@ $("#chat-message").keyup(function(e) {
     }
 });
 var handle = function(snapshot) {
+    if(expectingUpdate) {
+        expectingUpdate = false;
+        return;
+    }
     try {
         $("#chat-messages").empty();
         var val = snapshot.val();
