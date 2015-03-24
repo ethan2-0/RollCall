@@ -43,6 +43,19 @@ $("#chat-message").keyup(function(e) {
         } else {
             doNext(keyCache[activeUser]);
         }
+        (function() {            
+            var key = aes.getKey();
+            //Encrypt it with RSA
+            var encryptedKey = rsa.encryptAESKey(key, rsa.keypair);
+            //Encrypt the message with AES
+            var encrypted = aes.encrypt(thiz.value, key);
+            var chat = firebase.child("users").child(username).child("chat").child(encodeUsername(activeUser));
+            chat.child(new Date().getTime() + "").set({
+                msg: encrypted,
+                from: username,
+                key: encryptedKey
+            });
+        })();
     }
 });
 var handle = function(snapshot) {
