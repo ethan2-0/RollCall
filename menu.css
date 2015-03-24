@@ -1,0 +1,84 @@
+/**
+ * Copyright (c) 2015 Ethan White. All rights reserved.
+ * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+ *   1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+ *   2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation
+ *      and/or other materials provided with the distribution.
+ *   3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+.sidebar {
+    height: 100vh;
+    width: 15vw;
+    /*background-color: #333;*/
+    background-color: #333;
+    position: absolute;
+    right: -15vw;
+
+    transition: right 0.4s;
+    -webkit-transition: right 0.4s;
+    -moz-transition: right 0.4s;
+    transition-timing-function: ease-in-out;
+    -webkit-transition-timing-function: ease-in-out;
+    -moz-transition-timing-function: ease-in-out;
+    
+    color: white;
+    top: 0px;
+
+    border-left: 2px solid rgb(80, 80, 80);
+}
+.sidebar-close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 100;
+    font-size: 40px;
+    cursor: pointer;
+}
+.sidebar-item {
+    font-size: 18px;
+    cursor: pointer;
+    font-family: "Open Sans Light", sans-serif;
+}
+.sidebar-items {
+    margin-top: 57px;
+    margin-left: 0.6vw;
+    border-top: 1px solid rgb(80, 80, 80);
+    width: 13.6vw;
+    padding-left: 0.4vw;
+}
+.sidebar-logout {
+    position: absolute;
+    top: 5px;
+    right: 55px;
+    font-family: "Open Sans Light";
+    font-size: 17px;
+    cursor: pointer;
+    background-color: rgb(64, 64, 64);
+    padding: 3px;
+    border-radius: 4px;
+    transition: background-color 0.4s;
+}
+.sidebar-logout:hover {
+    background-color: rgb(56, 56, 56);
+}
+.sidebar-logout:before {
+    content: "Log out";
+}
+.logged-in-title {
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    font-size: 16px;
+    font-family: "Open Sans Light";
+    padding-left: 7px;
+}
+.logged-in-title:before {
+    content: "Logged in as ";
+    color: rgb(210, 210, 210);
+    display: block;
+    margin-left: -7px;
+}

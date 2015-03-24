@@ -10,6 +10,7 @@
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+@import url("menu.css");
 @font-face {
     font-family: 'Open Sans Light';
     src: url('fonts/OpenSans-Light-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/OpenSans-Light-webfont.woff') format('woff'), url('fonts/OpenSans-Light-webfont.ttf') format('truetype');
@@ -363,40 +364,6 @@ input[type=text].plain {
     background-color: rgb(51, 51, 51);
     color: white;
 }
-.sidebar {
-    height: 100vh;
-    width: 15vw;
-    background-color: #333;
-    position: absolute;
-    right: -15vw;
-
-    transition: right 0.4s;
-    -webkit-transition: right 0.4s;
-    -moz-transition: right 0.4s;
-    transition-timing-function: ease-in-out;
-    -webkit-transition-timing-function: ease-in-out;
-    -moz-transition-timing-function: ease-in-out;
-    
-    color: white;
-    top: 0px;
-}
-.sidebar-close {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    z-index: 100;
-    font-size: 40px;
-    cursor: pointer;
-}
-.sidebar-item {
-    font-size: 18px;
-    cursor: pointer;
-    font-family: "Open Sans Light", sans-serif;
-}
-.sidebar-items {
-    margin-top: 50px;
-    margin-left: 15px;
-}
 .white {
     color: white;
 }
@@ -448,13 +415,6 @@ input[type=text].plain {
 .credit-row {
     height: 30vh;
     text-align: center;
-}
-.logged-in-title {
-    position: absolute;
-    top: 7px;
-    left: 7px;
-    font-size: 16px;
-    font-family: "Open Sans Light";
 }
 ::-moz-selection {
     background-color: #b3d4fc;

@@ -66,6 +66,12 @@ menu = (function() {
             menuNode.append($("<div>")
                 .addClass("logged-in-title")
                 .html(login.getUser().email));
+            menuNode.append($("<div>")
+                .addClass("sidebar-logout")
+                .on("click", function() {
+                    login.logout();
+                    window.location.href = window.location.href;
+                }));
         } catch(e) {
             //Don't append it
         }
@@ -112,17 +118,17 @@ menu.register($("<div>")
     });
 menu.register($("<div>")
     .addClass("sidebar-item")
+    .html("Credits"), function() {
+        alert("Not implemented yet.");
+        menu.navigate("credits.html");
+    });
+menu.register($("<div>")
+    .addClass("sidebar-item")
     .html("Source (github)"), function() {
         menu.navigate("http://github.com/ethan2-0/RollCall");
-    })
+    });
 try {
     login.getEmail();
-    menu.register($("<div>")
-        .addClass("sidebar-item")
-        .html("Log out"), function() {
-            login.logout();
-            window.location.href = window.location.href;
-        });
 } catch(e) {
     menu.register($("<div>")
         .addClass("sidebar-item")
