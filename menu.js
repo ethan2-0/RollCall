@@ -50,7 +50,7 @@ menu = (function() {
             .append($("<span>")
                 .addClass("glyphicon glyphicon-menu-hamburger"))
             .appendTo($(document.body))
-            .on("click", showMenu);
+            .on("click", showMenu); //46
         menuNode = $("<div>")
             .addClass("sidebar")
             .addClass("sidebar-hidden")
@@ -66,14 +66,9 @@ menu = (function() {
             menuNode.append($("<div>")
                 .addClass("logged-in-title")
                 .html(login.getUser().email));
-            menuNode.append($("<div>")
-                .addClass("sidebar-logout")
-                .on("click", function() {
-                    login.logout();
-                    window.location.href = window.location.href;
-                }));
         } catch(e) {
-            //Don't append it
+            menuNode.append($("<div>")
+                .addClass("logged-in-title not-logged-in-title"));
         }
     }
     function navigate(url) {
@@ -83,13 +78,24 @@ menu = (function() {
             window.location.href = url;
         }
     }
+    function addDivider() {
+        registerItem($("<div>")
+            .css("width", "40px")
+            .css("height", "1px")
+            .css("margin-top", "2px")
+            .css("background-color", "#606060"), function() {
+                //Do nothing
+                return;
+            });
+    }
     createNode();
     return {
         register: registerItem,
         show: showMenu,
         hide: hideMenu,
         regen: regen,
-        navigate: navigate
+        navigate: navigate,
+        addDivider: addDivider
     }
 })();
 menu.register($("<div>")
@@ -98,6 +104,7 @@ menu.register($("<div>")
         menu.navigate("index.html?username=" + uname);
         menu.hide();
     });
+menu.addDivider();
 menu.register($("<div>")
     .addClass("sidebar-item")
     .html("About"), function() {
@@ -119,16 +126,23 @@ menu.register($("<div>")
 menu.register($("<div>")
     .addClass("sidebar-item")
     .html("Credits"), function() {
-        alert("Not implemented yet.");
         menu.navigate("credits.html");
     });
+menu.addDivider();
 menu.register($("<div>")
     .addClass("sidebar-item")
     .html("Source (github)"), function() {
         menu.navigate("http://github.com/ethan2-0/RollCall");
     });
+menu.addDivider();
 try {
     login.getEmail();
+    menu.register($("<div>")
+        .addClass("sidebar-item")
+        .html("Log out"), function() {
+            login.logout();
+            window.location.href = window.location.href;
+        });
 } catch(e) {
     menu.register($("<div>")
         .addClass("sidebar-item")

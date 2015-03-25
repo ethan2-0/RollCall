@@ -10,25 +10,51 @@
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+@font-face {
+    font-family: 'Advent Pro';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Advent Pro Regular'), local('AdventPro-Regular'),
+        url(fonts/adventProReg.woff2) format('woff2'),
+        url(fonts/adventProReg.woff) format('woff');
+}
+@font-face {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Source Sans Pro Light'), local('SourceSansPro-Light'),
+        url(fonts/sourceSansProLight.woff2) format('woff2'),
+        url(fonts/sourceSansProLight.woff) format('woff');
+}
+@font-face {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Source Sans Pro'), local('SourceSansPro-Regular'),
+        url(fonts/sourceSansPro.woff2) format('woff2'),
+        url(fonts/sourceSansPro.woff) format('woff');
+}
+
 .sidebar {
     height: 100vh;
     width: 15vw;
     /*background-color: #333;*/
-    background-color: #333;
+    background-color: #4a4a4a;
     position: absolute;
     right: -15vw;
 
-    transition: right 0.4s;
-    -webkit-transition: right 0.4s;
-    -moz-transition: right 0.4s;
+    transition: right 0.4s, box-shadow 0.4s;
+    -webkit-transition: right 0.4s, box-shadow 0.4s;
+    -moz-transition: right 0.4s, box-shadow 0.4s;
     transition-timing-function: ease-in-out;
     -webkit-transition-timing-function: ease-in-out;
     -moz-transition-timing-function: ease-in-out;
     
     color: white;
     top: 0px;
-
-    border-left: 2px solid rgb(80, 80, 80);
+}
+.sidebar-shown {
+    box-shadow: 0px 0px 7px 5px black;
 }
 .sidebar-close {
     position: absolute;
@@ -41,7 +67,7 @@
 .sidebar-item {
     font-size: 18px;
     cursor: pointer;
-    font-family: "Open Sans Light", sans-serif;
+    font-family: "Source Sans Pro", sans-serif;
 }
 .sidebar-items {
     margin-top: 57px;
@@ -73,12 +99,24 @@
     top: 7px;
     left: 7px;
     font-size: 16px;
-    font-family: "Open Sans Light";
     padding-left: 7px;
+    font-family: Arial;
 }
 .logged-in-title:before {
     content: "Logged in as ";
+    font-family: "Advent Pro";
     color: rgb(210, 210, 210);
     display: block;
     margin-left: -7px;
+}
+.not-logged-in-title:before {
+    content: "";
+}
+.not-logged-in-title {
+    top: 30px;
+}
+.not-logged-in-title:after {
+    color: rgb(210, 210, 210);
+    content: "Not logged in.";
+    font-family: "Advent Pro";
 }
