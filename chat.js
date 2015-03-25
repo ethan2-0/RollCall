@@ -60,6 +60,13 @@ $("#chat-message").keyup(function(e) {
         })();
     }
 });
+function pause() {
+    try {
+        throw "This is just to make the VM update the UI.";
+    } catch(e) {
+        //Do nothing
+    }
+}
 var handle = function(snapshot) {
     if(expectingUpdate) {
         expectingUpdate = false;
@@ -76,8 +83,11 @@ var handle = function(snapshot) {
             var from = entry["from"];
             var msgEnc = entry["msg"];
             //Decrypt the message
+            pause();
             var key = rsa.decryptAESKey(entry["key"]);
+            pause();
             var msg = aes.decrypt(msgEnc, key);
+            pause();
             $("#chat-messages").append($("<div>")
                 .addClass("chat-message")
                 .append($("<span>")
