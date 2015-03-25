@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<!--
+    Copyright (c) 2015 Ethan White. All rights reserved.
+    Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+      1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+      2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation
+         and/or other materials provided with the distribution.
+      3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+    FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+    DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+    WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<html>
+    <!-- TODO: Imperminance of the status quo -->
+    <head>
+        <meta charset="UTF-8"/>
+        <title>RollCall Privacy</title>
+        <!-- JQuery -->
+        <script type="text/javascript" src="jquery-1.11.1.min.js"></script>
+        <!-- Bootstrap -->
+        <script type="text/javascript" src="btsp/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="btsp/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="btsp/css/bootstrap-theme.min.css"/>
+        <!-- VelocityJS -->
+        <script type="text/javascript" src="velocity.js"></script>
+        <!-- Bootbox -->
+        <script type="text/javascript" src="bootbox.min.js"></script>
+        <!-- My stylesheet -->
+        <link rel="stylesheet" type="text/css" href="styles_other.css"/>
+        <!-- Firebase for login -->
+        <script type="text/javascript" src="firebase.js"></script>
+        <script type="text/javascript" src="login.js"></script>
+    </head>
+    <body>
+        <div style="width: 100%; height: 40vh" class="dark white osl big center">
+            <br/>
+            <br/>
+            RollCall is the cullimination of a lot of work by the free software community.<br/>
+            We just put it together.
+        </div>
+        <div style="width: 60vw; font-size: 18px; margin-left: 20vw; margin-bottom: 5vh;">
+            <br/>
+            Here are all of the projects that RollCall depends on. Without these, this service would be impossible.
+                <span class="title-main">Bootstrap</span>
+            Bootstrap is a UI framework, and it's just awesome. I don't think I'll ever develop a website without it ever again; the grid system is especially useful.
+            We use it mostly for its grid system, buttons, and dialogs - but it's used in a lot of other places, too.<br/>
+            <a href="http://getbootstrap.com/">Official Website</a> | <a href="https://github.com/twbs/bootstrap/">GitHub</a>
+                <span class="title-main">jQuery</span>
+            jQuery makes DOM interaction and AJAX so much easier, thus making pretty much all the UI code much easier to write. Literally everything you see in the RollCall webapp is put there by jQuery.
+            <br/>
+            <a href="https://jquery.com/">Official Website</a> | <a href="http://github.com/jquery/jquery">GitHub</a>
+                <span class="title-main">Firebase</span>
+            All the data is stored in Firebase. Not only that, I don't have to remember the syntax of SQL, or worry about query injection vulnerabilities, or even worry about the server at all - they 
+            handle it.<br/>
+            <a href="https://www.firebase.com/">Official Website</a>
+                <span class="title-main">PeerJS</span>
+            PeerJS handles all of the calls. Every second of call you make is because of PeerJS. I don't think I need to say more.<br/>
+            <a href="http://peerjs.com">Official Website</a> | <a href="https://github.com/peers/peerjs">GitHub (client source)</a> | <a href="https://github.com/peers/peerjs-server">GitHub
+            (server source)</a>
+                <span class="title-main">Velocity.js</span>
+            Velocity.js does almost all of the animations. It's easy to use, and it's <i>really</i> smooth - always smoother than jQuery animations, and usually smoother than CSS transitions.<br/>
+            <a href="http://julian.com/research/velocity/">Official Website</a> | <a href="https://github.com/julianshapiro/velocity">GitHub</a>
+                <span class="title-main">Bootbox.js</span>
+            All of the modal dialogs are handled by Bootbox.js. Although I could have done them by hand with Bootstrap, Bootbox makes it much, much easier and shorter.<br/>
+            <a href="http://bootboxjs.com/">Official Website</a> | <a href="https://github.com/makeusabrew/bootbox">GitHub</a>
+                <span class="title-main">CSS3 &amp; HTML5</span>
+            Literally, I'm thanking the internet here - this entire website is possible only due to the HTML5 effort and CSS3. HTML5 makes html so much more powerful.
+                <span class="title-main">WebRTC</span>
+            WebRTC is the underlying framework behind PeerJS. It's an effort to enable real-time communications, or RTC on the web, hence WebRTC. It is kind of an odd specification in that it
+            leaves many areas undefined, but with a good library, it's really powerful.<br/>
+            <a href="http://www.webrtc.org/">Official Website</a>
+        </div>
+        <script type="text/javascript" src="bottombar.js"></script>
+        <script type="text/javascript" src="menu.js"></script>
+    </body>
+</html>
