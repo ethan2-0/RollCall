@@ -170,7 +170,7 @@
     background-color: rgb(51, 51, 51);
     display: block;
     position: relative;
-    padding: 10px 15px;
+    padding: 0px 15px;
     color: white;
     height: 100%;
 }
@@ -431,4 +431,12 @@ input[type=text].plain {
 .left-sidebar-faded {
     color: rgb(210, 210, 210);
     font-family: "Open Sans Light";
+}
+.mini-title {
+    font-family: "Advent Pro";
+    color: rgb(210, 210, 210);
+    font-size: 16px;
+}
+.mini-title.light {
+    color: #696969;
 }
