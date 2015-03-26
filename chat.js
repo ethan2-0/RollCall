@@ -97,11 +97,6 @@ var handle = function(snapshot) {
                     .addClass("chat-message-content")
                     .html(msg)))
         }
-        console.log("-----");
-        console.log(!_firstChatGet);
-        console.log(document.hidden);
-        console.log(prevChatLength != length);
-        console.log("-----");
         if(!_firstChatGet && document.hidden && prevChatLength != length) {
             messageAudio.play();
             showNotification("Message", "From " + activeUser);
