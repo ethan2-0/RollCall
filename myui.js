@@ -32,7 +32,7 @@ $(".scrollto").each(function() {
     $(this).on("click", function() {
         $($(this).attr("elm")).velocity("scroll", {
             duration: 1000,
-            easing: "easeOutQuad"
+            easing: "ease-in-out"
         });
     });
 });
