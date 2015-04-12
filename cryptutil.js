@@ -177,7 +177,6 @@ var aes = (function() {
         return cipher.output;
     }
     function encryptKeypair(keypair, key) {
-        //pqned
         return {
             p: encrypt(JSON.stringify(keypair.p), key),
             q: encrypt(JSON.stringify(keypair.q), key),
