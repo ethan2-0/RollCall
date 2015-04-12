@@ -47,35 +47,6 @@
     -webkit-transform: scale(0.5, 0.5);
     -o-transform: scale(0.5, 0.5);
 }
-#my-video {
-    width: 640px;
-    height: 480px;
-}
-.call-item {
-    box-shadow: 0px 0px 3px 2px white;
-}
-#call-controls {
-    padding: 6px;
-    border-radius: 3px;
-    background-color: white;
-}
-#their-video {
-    width: 640px;
-    height: 480px;
-}
-#them {
-    position: absolute;
-    left: 30px;
-    top: 10px;
-}
-#call-controls {
-    position: absolute;
-    left: 30px;
-    bottom: 30px;
-}
-#call-layer {
-    background-color: rgb(51, 51, 51);
-}
 .video-title {
     position: absolute;
     top: 10px;
@@ -108,16 +79,6 @@
     transition: background-color 1s;
     -webkit-transition: background-color 1s;
     -moz-transition: background-color 1s;
-}
-#my-video {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-}
-#their-video {
-    position: absolute;
-    left: 10px;
-    top: 10px;
 }
 .status.status-online {
     color: green;

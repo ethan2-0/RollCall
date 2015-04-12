@@ -21,11 +21,9 @@
         <script type="text/javascript" src="btsp/js/bootstrap.min.js"></script>
         <link rel="stylesheet" type="text/css" href="btsp/css/bootstrap.min.css"/>
         <link rel="stylesheet" type="text/css" href="btsp/css/bootstrap-theme.min.css"/>
-        <!-- JQuery UI -->
-        <!-- <script type="text/javascript" src="jquery-ui.js"></script>
-        <link rel="stylesheet" type="text/css" href="jquery-ui.css"> -->
         <!-- My stylesheet -->
         <link rel="stylesheet" type="text/css" href="stylesheet.css">
+        <link rel="stylesheet" type="text/css" href="call.css">
         <!-- Firebase -->
         <script type="text/javascript" src="firebase.js"></script>
         <!-- Login options -->
@@ -106,12 +104,13 @@
         </div>
         <div id="active-box"></div>
         <div id="call-layer" class="layer screen-height screen-width">
-            <div id="them">
-                <video id="their-video" class="call-item" autoplay></video>
-                <!-- <div class="video-title" id="their-name">Ethan</div> -->
-            </div>
-            <div id="call-controls" class="call-item">
-                <button class="btn btn-danger" id="hang-up">Hang up</button>
+            <div class="screen-height" id="call-left-half">
+                <div id="them">
+                    <video id="their-video" class="call-item" autoplay></video>
+                </div>
+                <div id="call-controls">
+                    <button class="btn btn-danger" id="hang-up">Hang up</button>
+                </div>
             </div>
             <div id="me">
                 <video id="my-video" muted="true" class="call-item" autoplay></video>

@@ -1,0 +1,28 @@
+#them {
+    position: absolute;
+    left: 30px;
+    top: 10px;
+}
+#call-controls {
+    position: absolute;
+    left: 30px;
+    bottom: 30px;
+}
+#my-video {
+    width: 640px;
+    height: 480px;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+#their-video {
+    width: 640px;
+    height: 480px;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+#call-left-half {
+    width: 730px;
+    background-color: #333;
+}
