@@ -39,7 +39,10 @@
     <body>
         <div class="dark screen-width osl title center white" style="height: 80vh; padding-top: 5vh;">
             Log in to RollCall
-            <center style="margin-top: 15vh;">
+            <center style="height: 3vh; margin-top: 2vh; font-size: 20px; color: rgb(255, 127, 127)" id="shown-error">
+            <!-- Hi -->
+            </center>
+            <center style="margin-top: 10vh;">
                 <input type="text" id="username" placeholder="E-mail" class="plain white" style="width: 40vw;"/><br/>
                 <input type="password" id="password" placeholder="Password" class="plain white" style="width: 40vw;"/><br/>
                 <button class="my-button" type="button" id="log-in">Log in</button>
@@ -78,6 +81,7 @@
                         loadingOff();
                     } else {
                         $("#status").html("Logged in as " + data.data.email + " as UID " + data.data.uid);
+                        localStorage.setItem("peer_lastLogin", $("#username")[0].value);
                         window.location.href = "index.html";
                     }
                 });
@@ -117,7 +121,12 @@
                 }
             });
             $(document).on("ready", function() {
-                $("#username").focus();
+                if(localStorage.getItem("peer_lastLogin") == null) {
+                    $("#username").focus();
+                } else {
+                    $("#username")[0].value = localStorage.getItem("peer_lastLogin");
+                    $("#password").focus();
+                }
             });
         </script>
         <!-- Menu -->
