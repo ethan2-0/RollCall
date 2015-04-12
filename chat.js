@@ -99,7 +99,6 @@ var handle = function(snapshot) {
                 var from = entry["from"];
                 var msgEnc = entry["msg"];
                 var msgHash = sha1(msgEnc.data);
-                console.log(msgHash);
                 var msg;
                 if(typeof messageCache[msgHash] == "undefined") {
                     //Decrypt the message
