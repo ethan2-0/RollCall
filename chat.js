@@ -67,6 +67,7 @@ function pause() {
         //Do nothing
     }
 }
+var messageCache = {};
 var handle = function(snapshot) {
     if(expectingUpdate) {
         expectingUpdate = false;
@@ -76,36 +77,57 @@ var handle = function(snapshot) {
         $("#chat-messages").empty();
         var val = snapshot.val();
         var length = 0;
+        var index = 0;
+        var keys = [];
         for(var key in val) {
-            length++;
-            //For now, we're not worrying about any RSA stuff; that comes later.
-            var entry = val[key];
-            var from = entry["from"];
-            var msgEnc = entry["msg"];
-            //Decrypt the message
-            pause();
-            var key = rsa.decryptAESKey(entry["key"]);
-            pause();
-            var msg = aes.decrypt(msgEnc, key);
-            pause();
-            $("#chat-messages").append($("<div>")
-                .addClass("chat-message")
-                .append($("<span>")
-                    .addClass("chat-message-sender")
-                    .html(decodeUsername(from)))
-                .append($("<span>")
-                    .addClass("chat-message-content")
-                    .html(msg)))
+            keys.push(key);
         }
-        if(!_firstChatGet && document.hidden && prevChatLength != length) {
-            messageAudio.play();
-            showNotification("Message", "From " + activeUser);
-        } else if(_firstChatGet) {
-            _firstChatGet = false;
+        function doNext() {
+            if(index >= keys.length) {
+                if(!_firstChatGet && document.hidden && prevChatLength != length) {
+                    messageAudio.play();
+                    showNotification("Message", "From " + activeUser);
+                } else if(_firstChatGet) {
+                    _firstChatGet = false;
+                }
+                prevChatLength = length;
+            } else {
+                var key = keys[index++];
+                length++;
+                //For now, we're not worrying about any RSA stuff; that comes later.
+                var entry = val[key];
+                var from = entry["from"];
+                var msgEnc = entry["msg"];
+                var msgHash = sha1(msgEnc.data);
+                console.log(msgHash);
+                var msg;
+                if(typeof messageCache[msgHash] == "undefined") {
+                    //Decrypt the message
+                    pause();
+                    var key = rsa.decryptAESKey(entry["key"]);
+                    pause();
+                    msg = aes.decrypt(msgEnc, key);
+                    pause();
+                    messageCache[msgHash] = msg;
+                    setTimeout(doNext, 8);
+                } else {
+                    msg = messageCache[msgHash];
+                    setTimeout(doNext, 1);
+                }
+                $("#chat-messages").append($("<div>")
+                    .addClass("chat-message")
+                    .append($("<span>")
+                        .addClass("chat-message-sender")
+                        .html(decodeUsername(from)))
+                    .append($("<span>")
+                        .addClass("chat-message-content")
+                        .html(msg)))[0].scroll(0, 1000000);
+            }
         }
-        prevChatLength = length;
+        doNext();
     } catch(e) {
         console.log(e);
+        throw e;
     }
 }
 var handlerFb = null;

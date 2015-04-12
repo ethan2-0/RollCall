@@ -253,3 +253,6 @@ hash.sha256 = hash.createHasher(forge.md.sha256);
 hash.sha384 = hash.createHasher(forge.md.sha384);
 hash.sha512 = hash.createHasher(forge.md.sha512);
 hash.md5 = hash.createHasher(forge.md.md5);
+function sha1(msg) {
+    return hash.sha1.hexHash(msg);
+}

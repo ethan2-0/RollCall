@@ -4,7 +4,7 @@
 // Leemon Baird
 // www.leemon.com
 // 
-// I've made modifications; they are subject to the disclaimer that goes through line 34.
+// I've made modifications; they are also public domain.
 //     - Ethan
 //
 // Version history:
@@ -182,12 +182,33 @@
 //       Montgomery reduction, but that's obviously wrong.
 ////////////////////////////////////////////////////////////////////////////////////////
 if(typeof(window) == "undefined") {
-    window = {
-        crypto: crypto || mozCrypto
-    };
+    try {
+        window = {
+            crypto: mozCrypto
+        };
+    } catch(e) {
+        try {
+            window = {
+                crypto: crypto
+            };
+        } catch(e) {
+            console.warn("NOT USING WEBCRYPTO FOR RSA PRIVATE KEY");
+            window = {
+                crypto: {
+                    getRandomValues: function(arr) {
+                        for(var i = 0; i < arr.length; i++) {
+                            var maxVal = Math.pow(2, arr.BYTES_PER_ELEMENT * 8);
+                            arr[i] = Math.floor(Math.random() * maxVal);
+                        }
+                        return arr;
+                    }
+                }
+            }
+        }
+    }
 }
 Math.crand = function() {
-    //We have 32 bits of precision
+    //We have 32 bits of precision in JS (hence 1 / 429... = 2^32)
     return window.crypto.getRandomValues(new Uint32Array(1))[0] * (1 / 4294967296);
 }
 
