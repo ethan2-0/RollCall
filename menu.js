@@ -150,3 +150,19 @@ try {
             menu.navigate("login.html");
         }));
 }
+menu.addDivider();
+if(localStorage.getItem("peer_isTesting") == "yes") {
+    menu.register($("<div>")
+        .addClass("sidebar-item")
+        .html("Leave testing"), function() {
+            localStorage.setItem("peer_isTesting", "no");
+            window.location.href = window.location.href;
+        });
+} else {
+    menu.register($("<div>")
+        .addClass("sidebar-item")
+        .html("Enter testing"), function() {
+            localStorage.setItem("peer_isTesting", "yes");
+            window.location.href = window.location.href;
+        });
+}

@@ -11,7 +11,7 @@
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 if(typeof(firebase) == "undefined" && (typeof(loginCreateFb) == "undefined" || loginCreateFb)) {
-    firebase = new Firebase("https://cedi.firebaseio.com/");
+    var firebase = new Firebase(localStorage.getItem("peer_isTesting") == "yes" ? "https://ew-gdocsclone.firebaseio.com/" : "https://cedi.firebaseio.com/");
 }
 function encodeUsername(email) {
     return encodeURIComponent(email.replace(/\./g, ":"));
