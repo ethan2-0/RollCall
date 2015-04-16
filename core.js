@@ -55,11 +55,13 @@ if(localStorage.getItem("peer_setupDone") != null) {
     });
 }
 function step1() {
+    var umGotten = false;
     // Get audio/video stream
     navigator.getUserMedia({
         audio: accessRequest.audio,
         video: accessRequest.video
     }, function(stream) {
+        umGotten = true;
         console.log(stream);
         // Set your video displays
         $('#my-video').attr('src', URL.createObjectURL(stream))
@@ -79,6 +81,23 @@ function step1() {
         alert("getUserMedia error");
         console.log(err);
     });
+    setTimeout(function() {
+        if(!umGotten) {
+            bootbox.dialog({
+                title: "Hey!",
+                message: "Did you forget (or refuse) to allow access to your webcam and microphone?<br/>If you did not intend the access we requested, you can redo setup in the menu.",
+                buttons: {
+                    main: {
+                        className: "btn-danger",
+                        label: "Reload and try again",
+                        callback: function() {
+                            location.href = location.href;
+                        }
+                    }
+                }
+            })
+        }
+    }, 8000);
 }
 function step2() {
     $('#step1, #step3').hide();
