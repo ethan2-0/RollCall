@@ -46,7 +46,6 @@ var setup = (function() {
                 notification: $("#notification-yesno").attr("checked") == "checked"
             };
             localStorage.setItem("peer_permissions", JSON.stringify(permObj));
-            // firebase.child("users").child(username).child(setupParams).set({});
             firebase.child("users").child(username).child("setupParams").child("permissions").set(permObj);
 
             //Do the next stuff
