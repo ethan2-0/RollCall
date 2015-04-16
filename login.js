@@ -43,7 +43,8 @@ var login = (function() {
                 placeholder: "My goal in life is to make sure my parent element exists. I have served my purpose. Yay me!",
                 friends: {
                     0: "ethan" //Placeholder. TODO: Make this not ethan.
-                }
+                },
+                setupParams: "not_done"
             });
             if(callback != null && callback != undefined) {
                 callback({
@@ -58,6 +59,7 @@ var login = (function() {
             email: email,
             password: password
         }, function(error, authData) {
+            //Minor optimization: Make this parallel to authWithPassword
             if(error) {
                 if(callback != null && callback != undefined) {
                     callback({
@@ -65,23 +67,32 @@ var login = (function() {
                         data: error
                     })
                 };
-                return console.warn("Error in login:", error); //Same thing as above: returns undefined, same as this func.
+                return console.warn("Error in login:", error); //Same thing as above: returns undefined.
             }
-            try {
-                localStorage.setItem("peer_passwordHash", hash.sha512.multiple("password", 32).data)
-            } catch(e) {
-                console.log(e);
-            }
-            if(callback != null && callback != undefined) {
-                callback({
-                    type: "success",
-                    rawData: authData,
-                    data: {
-                        uid: authData.uid,
-                        email: email
+            firebase.child("users").child(encodeUsername(email)).once("value", function(snapshot) {
+                try {
+                    localStorage.setItem("peer_passwordHash", hash.sha512.multiple("password", 32).data)
+                    var setupParams = snapshot.child("setupParams").val();
+                    if(typeof setupParams == "string" || typeof setupParams == "undefined" || setupParams == null) {
+                        console.log("Will need setup.");
+                        localStorage.removeItem("peer_setupDone");
+                    } else {
+                        localStorage.setItem("peer_permissions", JSON.stringify(setupParams["permissions"]));
                     }
-                });
-            }
+                } catch(e) {
+                    console.log(e);
+                }
+                if(callback != null && callback != undefined) {
+                    callback({
+                        type: "success",
+                        rawData: authData,
+                        data: {
+                            uid: authData.uid,
+                            email: email
+                        }
+                    });
+                }
+            });
         });
     }
     function logout(email) {

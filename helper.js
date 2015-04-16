@@ -227,3 +227,11 @@ function sha3(msg) {
         outputLength: 512
     });
 }
+// Array Remove - By John Resig (MIT Licensed)
+//Modified by me - still MIT licensed
+//TODO: Convert away from using "this", make standalone
+// arrayRemove = function(from, to) {
+//     var rest = this.slice((to || from) + 1 || this.length);
+//     this.length = from < 0 ? this.length + from : from;
+//     return this.push.apply(this, rest);
+// };

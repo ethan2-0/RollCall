@@ -43,7 +43,9 @@ peer.on('error', function(err) {
 // Click handlers setup
 function core_beginCall(id) {
     console.log(window.localStream);
-    var call = peer.call(id, window.localStream);
+    var call = peer.call(id, window.localStream, {
+        hi: "hi"
+    });
     step3(call);
 }
 if(localStorage.getItem("peer_setupDone") != null) {
@@ -58,6 +60,7 @@ function step1() {
         audio: accessRequest.audio,
         video: accessRequest.video
     }, function(stream) {
+        console.log(stream);
         // Set your video displays
         $('#my-video').attr('src', URL.createObjectURL(stream))
             .on("loadeddata", function() {
@@ -89,8 +92,10 @@ function step3(call) {
     if (window.existingCall) {
         window.existingCall.close();
     }
+    console.log(call.metadata);
     // Wait for stream on the call, then set peer video display
     call.on('stream', function(stream) {
+        window.theirStream = stream;
         $('#their-video').attr('src', URL.createObjectURL(stream));
         $("#their-video").fadeIn();
     });

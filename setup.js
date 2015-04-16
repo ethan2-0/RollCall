@@ -40,11 +40,14 @@ var setup = (function() {
         function() {
             //Save the permission prefs
             console.log($("#video-yesno").attr("checked"));
-            localStorage.setItem("peer_permissions", JSON.stringify({
+            var permObj = {
                 video: $("#video-yesno").attr("checked") == "checked",
                 audio: $("#audio-yesno").attr("checked") == "checked",
                 notification: $("#notification-yesno").attr("checked") == "checked"
-            }));
+            };
+            localStorage.setItem("peer_permissions", JSON.stringify(permObj));
+            // firebase.child("users").child(username).child(setupParams).set({});
+            firebase.child("users").child(username).child("setupParams").child("permissions").set(permObj);
 
             //Do the next stuff
             loadPage("access-confirm");
