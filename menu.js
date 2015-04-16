@@ -166,3 +166,11 @@ if(localStorage.getItem("peer_isTesting") == "yes") {
             window.location.href = window.location.href;
         });
 }
+if(window.location.href.endsWith("/") || window.location.href.endsWith("index.html")) {
+    menu.register($("<div>")
+        .addClass("sidebar-item")
+        .html("Redo setup"), function() {
+            localStorage.removeItem("peer_setupDone");
+            window.location.href = window.location.href;
+        });
+}
