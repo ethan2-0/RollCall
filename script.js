@@ -254,8 +254,8 @@ var activeLayer = $("#home-layer");
 function loadLayer(name, ignoreWarnings) {
     var doIt = function() {
         var elm = $("#" + name + "-layer");
-        activeLayer.fadeOut();
-        elm.fadeIn();
+        activeLayer.velocity("fadeOut");
+        elm.velocity("fadeIn");
         activeLayer = elm;
         if (name == "home") {
             $("#active-box").show();
@@ -407,7 +407,7 @@ function generateSidebar(usernameListCallback) {
 }
 $(function() {
     generateSidebar();
-    $("#username-list").hide().fadeIn();
+    $("#username-list").hide().velocity("fadeIn");
 });
 userRef.child("friends").once("value", function(snapshot) {
     var friends = snapshot.val();
