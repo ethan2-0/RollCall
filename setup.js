@@ -34,6 +34,14 @@ var setup = (function() {
             btnNext();
         },
         function() {
+            loadPage("privatekey-select");
+            btnNext();
+        },
+        function() {
+            //Deal with privatekey-select behaviour
+            next();
+        },
+        function() {
             loadPage("access-mic");
             btnNext();
         },
