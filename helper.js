@@ -227,6 +227,13 @@ function sha3(msg) {
         outputLength: 512
     });
 }
+function Uint16ArrayToStr(arr) {
+    var ret = "";
+    for(var element of arr) {
+        ret += String.fromCharCode(element);
+    }
+    return ret;
+}
 // Array Remove - By John Resig (MIT Licensed)
 //Modified by me - still MIT licensed
 //TODO: Convert away from using "this", make standalone
