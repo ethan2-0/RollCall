@@ -69,10 +69,6 @@ function pause() {
 }
 var messageCache = {};
 var handle = function(snapshot) {
-    if(expectingUpdate) {
-        expectingUpdate = false;
-        return;
-    }
     try {
         $("#chat-messages").empty();
         var val = snapshot.val();
@@ -82,6 +78,7 @@ var handle = function(snapshot) {
         for(var key in val) {
             keys.push(key);
         }
+        keys.reverse();
         function doNext() {
             if(index >= keys.length) {
                 if(!_firstChatGet && document.hidden && prevChatLength != length) {
@@ -120,7 +117,7 @@ var handle = function(snapshot) {
                         .html(decodeUsername(from)))
                     .append($("<span>")
                         .addClass("chat-message-content")
-                        .html(msg)))[0].scroll(0, 1000000);
+                        .html(msg)))[0];
             }
         }
         doNext();
