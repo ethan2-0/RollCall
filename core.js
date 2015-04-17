@@ -76,6 +76,9 @@ function step1() {
                 }, 100);
             });
         window.localStream = stream;
+        setTimeout(function() {
+            $("#video-toggle").click();
+        }, 500);
         step2();
     }, function(err) {
         alert("getUserMedia error");

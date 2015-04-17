@@ -65,3 +65,16 @@ $(".loading-icon").each(function() {
     }
     updateOnce();
 });
+$(".myui-togglebtn")
+    .addClass("btn-success")
+    .attr("enabled", "true")
+    .on("click", function() {
+        if($(this).attr("enabled") == "true") {
+            $(this).attr("enabled", "false");
+        } else {
+            $(this).attr("enabled", "true");
+        }
+        $(this).removeClass("btn-success").removeClass("btn-danger")
+            .addClass($(this).attr("enabled") == "true" ? "btn-success" : "btn-danger")
+            .trigger("x-toggled");
+    });

@@ -482,3 +482,9 @@ function loading() {
 function stopLoading() {
     $("#the-loading-icon").velocity("fadeOut");
 }
+$("#video-toggle").on("x-toggled", function() {
+    localStream.getVideoTracks()[0].enabled = $(this).attr("enabled") == "true";
+});
+$("#audio-toggle").on("x-toggled", function() {
+    localStream.getAudioTracks()[0].enabled = $(this).attr("enabled") == "true";
+});
