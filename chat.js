@@ -18,6 +18,7 @@ var expectingUpdate = false;
 $("#chat-message").keyup(function(e) {
     if (e.keyCode == 13) {
         var thiz = this;
+        var doneOne = false;
         var doNext = function(publickey) {
             publickey = rsa.unstringifyPublicKey(publickey);
             //Get a new AES key
@@ -32,7 +33,12 @@ $("#chat-message").keyup(function(e) {
                 from: username,
                 key: encryptedKey
             });
-            thiz.value = "";
+            if(doneOne) {
+                thiz.value = "";
+                doneOne = false;
+            } else {
+                doneOne = true;
+            }
         }
         if(typeof(keyCache[activeUser]) == "undefined") {
             //Get their public key
@@ -51,12 +57,17 @@ $("#chat-message").keyup(function(e) {
             //Encrypt the message with AES
             var encrypted = aes.encrypt(thiz.value, key);
             var chat = firebase.child("users").child(username).child("chat").child(encodeUsername(activeUser));
-            expectingUpdate = true;
             chat.child(new Date().getTime() + "").set({
                 msg: encrypted,
                 from: username,
                 key: encryptedKey
             });
+            if(doneOne) {
+                thiz.value = "";
+                doneOne = false;
+            } else {
+                doneOne = true;
+            }
         })();
     }
 });
