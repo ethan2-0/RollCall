@@ -234,6 +234,9 @@ function Uint16ArrayToStr(arr) {
     }
     return ret;
 }
+function escapeHtml(str) {
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
 // Array Remove - By John Resig (MIT Licensed)
 //Modified by me - still MIT licensed
 //TODO: Convert away from using "this", make standalone

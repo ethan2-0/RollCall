@@ -11,6 +11,7 @@
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 //BigInt.js from http://www.leemon.com/crypto/BigInt.html
+var converter = Markdown.getSanitizingConverter();
 var keyCache = {};
 var prevChatLength = 0;
 var _firstChatGet = true;
@@ -121,6 +122,10 @@ var handle = function(snapshot) {
                     msg = messageCache[msgHash];
                     setTimeout(doNext, 1);
                 }
+                //TODO: Add md2html.js as script, parse markdown
+                var realMsg = escapeHtml(msg);
+                realMsg = converter.makeHtml(realMsg);
+                realMsg = realMsg.substring(3, realMsg.length - 4);
                 $("#chat-messages").append($("<div>")
                     .addClass("chat-message")
                     .append($("<span>")
@@ -128,7 +133,7 @@ var handle = function(snapshot) {
                         .html(decodeUsername(from)))
                     .append($("<span>")
                         .addClass("chat-message-content")
-                        .html(msg)))[0];
+                        .html(realMsg)))[0];
             }
         }
         doNext();
