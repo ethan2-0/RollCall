@@ -1,0 +1,182 @@
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>RollCall support</title>
+        <!-- JQuery -->
+        <script type="text/javascript" src="jquery-1.11.1.min.js"></script>
+        <!-- Bootstrap -->
+        <script type="text/javascript" src="btsp/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="btsp/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="btsp/css/bootstrap-theme.min.css"/>
+        <!-- VelocityJS -->
+        <script type="text/javascript" src="velocity.js"></script>
+        <!-- Bootbox -->
+        <script type="text/javascript" src="bootbox.min.js"></script>
+        <!-- My stylesheet -->
+        <link rel="stylesheet" type="text/css" href="styles_other.css"/>
+        <link rel="stylesheet" type="text/css" href="about.css"/>
+        <!-- Firebase -->
+        <script type="text/javascript" src="firebase.js"></script>
+        <style type="text/css">
+            h1, h2, h3, h4, h5, h6 {
+                font-family: "Open Sans Light";
+                transform: translate(20px);
+            }
+            h1 {
+                text-align: center;
+                transform: none;
+                -webkit-transform: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div style="height: 10vh; padding-top: calc(5vh - 24px);" class="screen-width dark white big osl">
+            <input type="text" class="plain center" placeholder="What do you want to know?" id="search" style="width: 100%" autocomplete="off"/>
+        </div>
+        <div id="back-overlay" style="position: absolute; left: 10px; top: calc(5vh - 16px); color: white; cursor: pointer;">
+            <span class="glyphicon glyphicon-chevron-left" style="font-size: 32px;"></span>
+        </div>
+        <div id="content" style="padding-left: 20vw; width: 60vw;">
+            <div class="layer" id="article-list">
+                <div class="list-group" id="article-list-group" style="width: 60vw;">
+                    <div class="list-group-item">
+                        Loading...
+                    </div>
+                </div>
+            </div>
+            <div class="layer" id="article">
+            </div>
+        </div>
+        <script type="text/javascript" src="markdown.js"></script>
+        <script type="text/javascript">
+            function encodeUsername(email) {
+                return encodeURIComponent(email.replace(/\./g, ":"));
+            }
+            var firebase = new Firebase("https://ew-issues.firebaseio.com/");
+            $(".layer").hide();
+            $("#article-list").show();
+            $("#back-overlay").on("click", function() {
+                backStack.pop()();
+            });
+            var converter = Markdown.getSanitizingConverter();
+            //Thanks http://www.willmcgugan.com/blog/tech/2015/3/5/sublime-text-like-fuzzy-matching-in-javascript/
+            function fuzzy_match(text, search) {
+                //Parameter text is a title, search is the user's search
+                // remove spaces, lower case the search so the search
+                // is case insensitive
+                var search = search.replace(/\ /g, '').toLowerCase();
+                var tokens = [];
+                var search_position = 0;
+                // Go through each character in the text
+                for (var n = 0; n < text.length; n++) {
+                    var text_char = text[n];
+                    // if we match a character in the search, highlight it
+                    if (search_position < search.length &&
+                        text_char.toLowerCase() == search[search_position]) {
+                        text_char = '<b>' + text_char + '</b>';
+                        search_position += 1;
+                    }
+                    tokens.push(text_char);
+                }
+                // If are characters remaining in the search text,
+                // return an empty string to indicate no match
+                if (search_position != search.length) {
+                    return '';
+                }
+                return tokens.join('');
+            }
+            var articles = ["Loading..."];
+            firebase.child("names").on("value", function(snapshot) {
+                var list = [];
+                var val = snapshot.val();
+                for(var key in val) {
+                    var article = val[key];
+                    list.push(article);
+                }
+                articles = list;
+                displayArticleList();
+            });
+            function getArticle(name, callback) {
+                //callback("Interesting article\n=========\n_This_ is a __very__ interesting article linking to http://ddg.gg.");
+                firebase.child("articles").child(encodeUsername(name)).once("value", function(snapshot) {
+                    callback(snapshot.val());
+                });
+            }
+
+
+            var layer = "article-list";
+            var articleIndex = 0;
+            var selectedArticle = articles[0];
+            function displayArticleList() {
+                if(layer != "article-list") {
+                    return;
+                }
+                $("#article-list-group").empty();
+                var search = $("#search")[0].value;
+                var foundArticles = 0;
+                for(article of articles) {
+                    var found = fuzzy_match(article, search);
+                    if(search == "") {
+                        found = article;
+                    }
+                    if(found == "") {
+                        continue;
+                    }
+                    var elm = $("<div>")
+                        .addClass("list-group-item")
+                        .html(found);
+                    if(articleIndex == foundArticles) {
+                        elm.addClass("active");
+                        selectedArticle = article;
+                    }
+                    $("#article-list-group").append(elm);
+                    foundArticles++;
+                    if(foundArticles > 10) {
+                        $("#article-list-group").append($("<div>")
+                            .addClass("list-group-item disabled")
+                            .css("cursor", "default")
+                            .html("And a lot more"));
+                        break;
+                    }
+                }
+                if(articleIndex >= foundArticles) {
+                    articleIndex = foundArticles - 1;
+                    displayArticleList();
+                }
+            }
+            var backStack = [
+                function() {
+                    window.location.href = "index.html";
+                }
+            ];
+            displayArticleList();
+            $("#search").on("keypress", function(evt) {
+                if(evt.key == "ArrowDown") {
+                    articleIndex++;
+                    evt.preventDefault();
+                } else if(evt.key == "ArrowUp") {
+                    articleIndex--;
+                    articleIndex = articleIndex < 0 ? 0 : articleIndex;
+                    evt.preventDefault();
+                } else if(evt.key == "Enter") {
+                    getArticle(selectedArticle, function(text) {
+                        $(".layer").velocity("fadeOut", 400, function() {
+                            backStack.push(function() {
+                                $(".layer").velocity("fadeOut", 400, function() {
+                                    $("#article-list").velocity("fadeIn");
+                                    $("#search").focus();
+                                });
+                            });
+                            $("#article").html(converter.makeHtml(text)).velocity("fadeIn");
+                        });
+                    });
+                }
+            });
+            $("#search").on("keyup", displayArticleList)
+                .on("keypress", displayArticleList)
+                .focus();
+        </script>
+        <script type="text/javascript" src="login.js"></script>
+        <script type="text/javascript" src="menu.js"></script>
+    </body>
+</html>

@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>RollCall writer</title>
+        <!-- JQuery -->
+        <script type="text/javascript" src="jquery-1.11.1.min.js"></script>
+        <!-- Bootstrap -->
+        <script type="text/javascript" src="btsp/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="btsp/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="btsp/css/bootstrap-theme.min.css"/>
+        <!-- VelocityJS -->
+        <script type="text/javascript" src="velocity.js"></script>
+        <!-- Bootbox -->
+        <script type="text/javascript" src="bootbox.min.js"></script>
+        <!-- My stylesheet -->
+        <link rel="stylesheet" type="text/css" href="styles_other.css"/>
+        <link rel="stylesheet" type="text/css" href="about.css"/>
+        <script type="text/javascript" src="menu.js"></script>
+        <!-- Firebase -->
+        <script type="text/javascript" src="firebase.js"></script>
+
+        <script type="text/javascript" src="markdown.js"></script>
+        <script type="text/javascript" src="mdEditor.js"></script>
+        <style type="text/css">
+            h1, h2, h3, h4, h5, h6 {
+                font-family: "Open Sans Light";
+            }
+        </style>
+        <script type="text/javascript">
+        </script>
+    </head>
+    <body>
+        <div id="commit" style="position: absolute; top: 10px; right: 10px;">
+            <button class="btn btn-info" id="commit">Commit</button>
+        </div>
+        <textarea id="wmd-input" class="wmd-input" style="width: 100vw; height: 50vh;">
+# __Type _something___
+        </textarea>
+        <div id="wmd-preview" class="wmd-panel wmd-preview">
+        </div>
+        <script type="text/javascript">
+            function encodeUsername(email) {
+                return encodeURIComponent(email.replace(/\./g, ":"));
+            }
+            var firebase = new Firebase("https://ew-issues.firebaseio.com/");
+            var converter = Markdown.getSanitizingConverter();
+            var editor = new Markdown.Editor(converter);
+            try {
+                editor.run();
+            } catch(e) {
+                console.warn("Got exception.");
+            }
+            $("#commit").on("click", function() {
+                bootbox.prompt("Enter a title", function(result) {
+                    if(result != null) {
+                        firebase.child("articles").child(encodeUsername(result)).set($("#wmd-input")[0].value);
+                        firebase.child("names").push(result);
+                        $("#wmd-input")[0].value = "Committed\n---\nCommitted as " + result;
+                        $("#wmd-preview").html(converter.makeHtml($("#wmd-input")[0].value));
+                    }
+                });
+            })
+        </script>
+    </body>
+</html>
