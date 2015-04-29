@@ -14,8 +14,8 @@ importScripts("BigInt.js");
 self.addEventListener("message", function(msg) {
     console.log("Generating primes...");
     console.log("Generating p...");
-    var p = randTruePrime(516);
+    var p = randTruePrime(510);
     console.log("Generating q...");
-    var q = randTruePrime(510);
+    var q = randTruePrime(516);
     self.postMessage([p, q]);
 });

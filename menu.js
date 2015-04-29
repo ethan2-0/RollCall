@@ -166,6 +166,41 @@ if(localStorage.getItem("peer_isTesting") == "yes") {
             window.location.href = window.location.href;
         });
 }
+if(typeof console["logs"] != "undefined") {
+    menu.register($("<div>")
+        .addClass("sidebar-item")
+        .html("Report logs"), function() {
+            bootbox.prompt("Enter a comment", function(result) {
+                if(result == null) {
+                    bootbox.alert("Dismissed; will not report.");
+                } else {
+                    //Generate the log. In the future, will put in Firebase
+                    alert("[Please copy-paste this and do something useful with it.]"
+                        + "\n====Begin crash report==="
+                        + "\n" + console.logs
+                        + "\n" + "[Comment: " + result + "]");
+                    //Ignore the rest
+                    return;
+                    //Get the RSA publickey
+                    fetch("reportPubKey.json").then(function(resp) {
+                        return resp.json();
+                    }).then(function(keypair) {
+                        var encryptionKey = aes.getKey();
+                        var encryptedKey = rsa.encryptAESKey(aes.getKey(), keypair);
+                        var encryptedComment = aes.encrypt(result, encryptionKey) //encrypt comment and logs, push to subnode of FB
+                        var encryptedLog = aes.encrypt(console.logs, encryptionKey);
+                        firebase.child("logs").push({
+                            key: encryptedKey,
+                            comment: encryptedComment.data,
+                            log: encryptedLog.data
+                        });
+                    }).catch(function(ex) {
+                        console.log("parsing failed", ex);
+                    })
+                }
+            });
+        });
+}
 if(window.location.href.endsWith("/") || window.location.href.endsWith("index.html")) {
     menu.register($("<div>")
         .addClass("sidebar-item")
