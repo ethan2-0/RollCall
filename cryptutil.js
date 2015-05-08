@@ -18,6 +18,7 @@ if(typeof(initRsa) == "undefined") {
     rsa = (function() {
         var p, q, n, e, d, keypair;
         var generateKeypair = function() {
+            miniNote("Generating RSA keypair", "Your encryption keys are being generated. You can't send any messages while this is happening.", false);
             var worker = new Worker("cryptoworker.js");
             console.log("Creating keypair...");
             console.log("Choosing p and q...");
@@ -52,6 +53,7 @@ if(typeof(initRsa) == "undefined") {
                 var keyHashed = hash.sha512.multiple(localStorage.getItem("peer_passwordHash"), 32).data;
                 keyHashed = aes.getPasswordKey(keyHashed);
                 firebase.child("users").child(username).child("keypair").set(aes.encryptKeypair(keypair, keyHashed));
+                miniNoteClose();
             });
         }
         firebase.child("users").child(username).child("keypair").once("value", function(snapshot) {

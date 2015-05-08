@@ -401,3 +401,39 @@ input[type=text].plain {
 .mini-title.light {
     color: #696969;
 }
+#notification {
+    background-color: #d2691e;
+    width: 350px;
+    height: 125px;
+    position: absolute;
+    right: 0px;
+    top: 6.5vh;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    padding: 4px;
+    padding-left: 8px;
+    color: white;
+    transition: transform 0.4s;
+}
+#notification-title {
+    font-family: "Open Sans Light";
+    font-size: 26px;
+}
+#notification-content {
+    font-family: "Source Sans Pro";
+    font-size: 20px;
+    color: #EEE;
+}
+#notification-close {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    font-size: 30px;
+    padding-right: 3px;
+    padding-top: 3px;
+    padding-left: 5px;
+    cursor: pointer;
+}
+#notification-close:hover {
+    background-color: rgb(189, 94, 27);
+}

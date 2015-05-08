@@ -157,6 +157,28 @@ function updateButtons(online) {
     prevOnline = online;
 }
 
+$("#notification").css("transform", "translateX(350px)");
+$("#notification-close").on("click", function() {
+    miniNoteClose();
+});
+function miniNote(title, text, closeable) {
+    if(closeable == false) {
+        $("#notification-close").hide();
+    } else {
+        $("#notification-close").show();
+    }
+    $("#notification-title").html(title);
+    $("#notification-content").html(text);
+    $("#notification")
+        .css("transition-timing-function", "cubic-bezier(0.075, 0.82, 0.165, 1);")
+        .css("transform", "translateX(0px)");
+}
+function miniNoteClose() {
+    $("#notification")
+        .css("transition-timing-function", "cubic-bezier(0.6, 0.04, 0.98, 0.335);")
+        .css("transform", "translateX(350px)");
+}
+
 function updateOnline(online) {
     online = true; //TODO: This is a hack.
     $("#home-status").transitionTo($("<div>").addClass("status").addClass(online ? "status-online" : "status-offline"));
