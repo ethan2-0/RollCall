@@ -36,7 +36,7 @@ peer.on('call', function(call) {
     step3(call);
 });
 peer.on('error', function(err) {
-    alert(err.message);
+    console.warn("An error occurred", err);
     // Return to step 2 if error occurs
     step2();
 });
