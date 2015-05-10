@@ -437,3 +437,14 @@ input[type=text].plain {
 #notification-close:hover {
     background-color: rgb(189, 94, 27);
 }
+#email-top {
+    width: 100vw;
+    height: 80vh;
+    background-size: 100% auto;
+}
+#email-menu {
+    background-color: rgb(208, 51, 37);
+    width: 100vw;
+    height: 75px;
+    box-shadow: 0px 2px 2px 0px #7f7f7f;
+}

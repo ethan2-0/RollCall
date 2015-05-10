@@ -18,7 +18,7 @@
         <script type="text/javascript">
             gcon = console;
         </script>
-        <script type="text/javascript" src="dummyconsole.js"></script>
+        <!-- <script type="text/javascript" src="dummyconsole.js"></script> -->
         <!-- JQuery -->
         <script type="text/javascript" src="jquery-1.11.1.min.js"></script>
         <!-- Bootstrap -->
@@ -168,6 +168,18 @@
                 </div>
             </div>
         </div>
+        <div id="email-layer" class="layer" style="overflow-y: scroll; height: 100vh;">
+            <div id="email-top">
+                <br/>
+                <center class="opensans big" style="color: rgb(187, 62, 50);">
+                    Your e-mail
+                </center>
+            </div>
+            <div id="email-menu">
+            </div>
+            <div style="width: 10px; height: 400vh;">
+            </div>
+        </div>
         <div id="notification">
             <div id="notification-title">
                 Title
@@ -205,6 +217,7 @@
                 asyncLoad("myui.js");
                 asyncLoad("menu.js");
                 asyncLoad("contextmenu.js");
+                asyncLoad("backgrounds.js");
             });
             isMainPage = true;
         </script>

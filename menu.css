@@ -120,3 +120,6 @@
     content: "Not logged in.";
     font-family: "Advent Pro";
 }
+#menu-icon {
+    background-color: white;
+}

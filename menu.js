@@ -166,6 +166,11 @@ if(localStorage.getItem("peer_isTesting") == "yes") {
             window.location.href = window.location.href;
         });
 }
+menu.register($("<div>")
+    .addClass("sidebar-item")
+    .html("Test"), function() {
+        loadLayer("email");
+    });
 if(typeof console["logs"] != "undefined") {
     menu.register($("<div>")
         .addClass("sidebar-item")
