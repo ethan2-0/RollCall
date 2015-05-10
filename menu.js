@@ -170,6 +170,7 @@ menu.register($("<div>")
     .addClass("sidebar-item")
     .html("Test"), function() {
         loadLayer("email");
+        menu.hide();
     });
 if(typeof console["logs"] != "undefined") {
     menu.register($("<div>")
