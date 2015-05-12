@@ -439,7 +439,7 @@ input[type=text].plain {
 }
 #email-top {
     width: 100vw;
-    height: calc(100vh - 75px);
+    height: 100vh;
     background-size: 100% auto;
 }
 #email-menu {
@@ -465,24 +465,18 @@ input[type=text].plain {
 }
 #background-name {
     position: absolute;
-    bottom: 75px;
-    padding-bottom: 10px;
-    padding: 5px;
-    background-color: rgb(208, 51, 37);
-    text-align: center;
-    width: 200px;
-    left: calc(50vw - 100px);
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    border-bottom-left-radius: -8px;
-    font-family: "Source Sans Pro";
-    font-size: 16px;
+    right: 0px;
+    bottom: 0px;
+    background-color: rgba(187, 62, 50, 1);
+    padding: 10px;
+    border-top-left-radius: 5px;
 }
 .light {
     color: rgb(105, 105, 105);
 }
 .email-title {
     color: rgb(187, 62, 50);
+    display: none;
     position: absolute;
     top: 10px;
     width: 100%;
