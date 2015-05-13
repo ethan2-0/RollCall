@@ -42,7 +42,7 @@ var login = (function() {
             firebase.child("users").child(encodeUsername(email)).set({
                 placeholder: "My goal in life is to make sure my parent element exists. I have served my purpose. Yay me!",
                 friends: {
-                    0: "ethan" //Placeholder. TODO: Make this not ethan.
+                    0: "PLACEHOLDER" //TODO: Make this not a placeholder.
                 },
                 setupParams: "not_done"
             });

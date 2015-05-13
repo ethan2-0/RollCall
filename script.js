@@ -273,8 +273,11 @@ $("#my-name").html(username);
 
 var activeLayer = $("#home-layer");
 
+window.layerLoadHandlers = {};
+
 function loadLayer(name, ignoreWarnings) {
     var doIt = function() {
+        (typeof layerLoadHandlers[name] == "undefined" ? function() {} : layerLoadHandlers[name])();
         var elm = $("#" + name + "-layer");
         activeLayer.velocity("fadeOut");
         elm.velocity("fadeIn");
@@ -315,7 +318,7 @@ $(".layer").hide();
 loadLayer("home");
 
 function call(person) {
-    callee = person;
+    callee = person; //Implicit global
     $("#their-name").html(callee);
     loadLayer("call");
     $("#their-video").hide();
@@ -348,18 +351,6 @@ function addMessage(sender, message, animate) {
 function getUnixTimestamp() {
     return Date.now() / 1000 | 0;
 }
-/*setInterval(function() {
-    firebase.child("users").child(username).child("last-online").set(getUnixTimestamp());
-    //Poll the online status of the current user.
-    //Optimization: Use a .on event handler and store the last time it's triggered in a variable; then occasionally poll that variable.
-    var prevOnline = $("#home-status").find(".status").attr("class").indexOf("online") >= 0;
-    firebase.child("users").child(encodeUsername(activeUser)).child("last-online").once("value", function(snapshot) {
-        var online = getUnixTimestamp() - snapshot.val() < 9;
-        if (online != prevOnline) {
-            updateOnline(online);
-        }
-    });
-}, 7000);*/
 
 function rf(func, params) {
     return func(params);
@@ -382,6 +373,9 @@ function generateSidebar(usernameListCallback) {
         $("#username-list").empty();
         for (index in children) {
             var child = children[index];
+            if(child == "PLACEHOLDER") {
+                continue;
+            }
             var elm = $("<div>")
                 .addClass("better-list-item")
                 .addClass("selectable")
