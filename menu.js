@@ -101,8 +101,13 @@ menu = (function() {
 menu.register($("<div>")
     .addClass("sidebar-item")
     .html("Home"), function() {
-        menu.navigate("index.html?username=" + uname);
-        menu.hide();
+        if(isMainPage) {
+            loadLayer("home");
+            menu.hide();
+        } else {
+            menu.navigate("index.html?username=" + uname);
+            menu.hide();
+        }
     });
 menu.addDivider();
 menu.register($("<div>")
