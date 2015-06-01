@@ -21,9 +21,18 @@ var email = (function() {
         function getCodeMirror() {
             return codemirror;
         }
+        function send() {
+            var val = codemirror.getValue();
+            var title = $("#email-subject")[0].value;
+            chooseFriend(function(friend) {
+                sender.send(val, title, friend);
+                miniNote("E-mail sent", "Sent 1 e-mail to " + friend + ".");
+            });
+        }
         return {
             getCodeMirror: getCodeMirror,
-            generatePreview: generatePreview
+            generatePreview: generatePreview,
+            send: send
         }
     })();
     var sender = (function() {
@@ -40,9 +49,7 @@ var email = (function() {
                     msg: encryptedMsg,
                     title: encryptedTitle
                 };
-                //firebase.child("users").child(encodeUsername(uname)).child("email").push(enc);
-                console.log(enc);
-                window.res = enc;
+                firebase.child("users").child(encodeUsername(uname)).child("email").push(enc);
             });
         }
         function decrypt(enc) {
@@ -65,11 +72,47 @@ var email = (function() {
             .removeClass("email-tab-shown");
         $("#email-" + tabname).show();
     }
+    function chooseFriend(callback) {
+        $("#email-friend-chooser").empty();
+        for(var friend of window.friends) {
+            $("#email-friend-chooser").append($("<div>")
+                .addClass("email-friend")
+                .html(decodeUsername(friend))
+                .on("click", function() {
+                    $(".email-friend-clicked")
+                        .removeClass("email-friend-clicked")
+                        .velocity({
+                            "border-left-width": 0
+                        }, 350);
+                    $(this)
+                        .addClass("email-friend-clicked")
+                        .velocity({
+                            "border-left-width": 10
+                        }, 350);
+                    $("#email-friend-chooser").attr("data-chosen", $(this).html());
+                }));
+        }
+        $("#email-friend-chooser")
+            .append($("<div>")
+                .addClass("email-friend")
+                .html("Accept")
+                .on("click", function() {
+                    $("#email-friend-chooser").velocity("fadeOut");
+                    callback($("#email-friend-chooser").attr("data-chosen"));
+                }));
+        $("#email-friend-chooser").velocity("fadeIn", function() {
+            if(typeof callback != "undefined") {
+                callback();
+            }
+        });
+    }
+    $("#email-friend-chooser").hide();
     return {
         writer: writer,
         sender: sender,
         switchToTab: switchToTab,
-        generateHtml: generateHtml
+        generateHtml: generateHtml,
+        chooseFriend: chooseFriend
     };
 })();
 (function() {
@@ -77,19 +120,11 @@ var email = (function() {
         .on("mouseenter", function() {
             email.writer.generatePreview();
             $("#email-preview")
-                .show()
-                .css("opacity", 0)
-                .velocity({
-                    opacity: 1
-                });
+                .velocity("fadeIn");
         })
         .on("mouseleave", function() {
             $("#email-preview")
-                .velocity({
-                    opacity: 0
-                }, function() {
-                    $("#email-preview").hide();
-                });
+                .velocity("fadeOut");
         });
     $("#email-preview").hide();
     $(".email-tab").hide();

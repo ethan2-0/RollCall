@@ -205,7 +205,7 @@ var aes = (function() {
         buffer.data = msg.data;
         decipher.update(buffer);
         decipher.finish();
-        //.substr(128) to remove the 128 bits of padding (to prevent certain cryptanalyses).
+        //.substr(128) to remove the 128 bytes (or 1Kb) of padding (to prevent certain cryptanalyses). (or not)
         return decipher.output.data;
     }
     return {

@@ -166,6 +166,9 @@ function miniNote(title, text, closeable) {
         $("#notification-close").hide();
     } else {
         $("#notification-close").show();
+        setTimeout(function() {
+            miniNoteClose();
+        }, 4000);
     }
     $("#notification-title").html(title);
     $("#notification-content").html(text);
@@ -358,6 +361,7 @@ function rf(func, params) {
 function generateSidebar(usernameListCallback) {
     userRef.once("value", function(snapshot) {
         var children = snapshot.child("friends").val();
+        window.friends = children;
         //Get the active item.
         var activeName = children[0];
         {
